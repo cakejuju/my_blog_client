@@ -1,3 +1,4 @@
+<!-- 全局的layout,这边不加任何样式 -->
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->

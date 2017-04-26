@@ -1,5 +1,5 @@
-<template>
 
+<template>
 <v-app id="sidebar-example-2" class="elevation-1" top-toolbar left-fixed-sidebar sidebar-under-toolbar :left-fixed-sidebar="sidebar">
   <v-toolbar  class="red">
     <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
@@ -26,122 +26,11 @@
       </v-list>
     </v-sidebar>
 
-<!--     <v-content>
-    <v-col xs4 v-for="i in 12" :key="i">
-      <v-card class="secondary">
-        <v-card-text>1</v-card-text>
-      </v-card>
-    </v-col>
-      <v-container fluid>
-        
-      </v-container>
-    </v-content> -->
 
-  <div class="component-example__container">
-   <div class="container container--fluid">
-    <div class="row">
-    <div class="col xs4"><v-card class="blue darken-4 white--text">
-  <v-card-row height="200px">
-    <v-card-title>
-      Featured Event: <br>
-      May 24, 2016 <br>
-      7-11pm
-    </v-card-title>
-  </v-card-row>
-  <v-card-row actions>
-    <v-btn flat class="white--text">Add to Calendar</v-btn>
-    <v-spacer></v-spacer>
-    <v-btn icon dark>
-      <v-icon>event</v-icon>
-    </v-btn>
-  </v-card-row>
-</v-card>
-</div>
-<div class="col xs4"><v-card class="blue darken-4 white--text">
-  <v-card-row height="200px">
-    <v-card-title>
-      Featured Event: <br>
-      May 24, 2016 <br>
-      7-11pm
-    </v-card-title>
-  </v-card-row>
-  <v-card-row actions>
-    <v-btn flat class="white--text">Add to Calendar</v-btn>
-    <v-spacer></v-spacer>
-    <v-btn icon dark>
-      <v-icon>event</v-icon>
-    </v-btn>
-  </v-card-row>
-</v-card></div>
-<div class="col xs4"><v-card class="blue darken-4 white--text">
-  <v-card-row height="200px">
-    <v-card-title>
-      Featured Event: <br>
-      May 24, 2016 <br>
-      7-11pm
-    </v-card-title>
-  </v-card-row>
-  <v-card-row actions>
-    <v-btn flat class="white--text">Add to Calendar</v-btn>
-    <v-spacer></v-spacer>
-    <v-btn icon dark>
-      <v-icon>event</v-icon>
-    </v-btn>
-  </v-card-row>
-</v-card></div>
-
-
-    <v-col xs4 v-for="i in 4" :key="i">
-      <v-card>
-        <v-card-row class="green darken-1">
-          <v-card-title>
-            <span class="white--text">Marriot Rewards</span>
-            <v-spacer></v-spacer>
-            <div>
-              <v-menu id="marriot" bottom left origin="top right">
-                <v-btn icon="icon" slot="activator" class="white--text">
-                  <v-icon>more_vert</v-icon>
-                </v-btn>
-                <v-list>
-                  <v-list-item>
-                    <v-list-tile>
-                      <v-list-tile-title>Never show rewards</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-tile>
-                      <v-list-tile-title>Remove Card</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-tile>
-                      <v-list-tile-title>Send Feedback</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-          </v-card-title>
-        </v-card-row>
-        <v-card-text>
-          <v-card-row height="75px">
-            <v-icon class="mr-5">card_membership</v-icon>
-            <div>
-              <div>Membership Number</div><strong>113241423</strong>
-            </div>
-          </v-card-row>
-        </v-card-text>
-        <v-card-row actions>
-          <v-btn flat class="green--text darken-1">View Email</v-btn>
-        </v-card-row>
-      </v-card>
-    </v-col>
-
-  </div></div></div>
+    <router-view></router-view>
 
 
   </main>
-
 
 
 
@@ -180,6 +69,9 @@
 </template>
 
 <script>
+// 引入瀑布流的插件
+import Waterfall from 'vue-waterfall/lib/waterfall'
+import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 
 
 export default {
@@ -190,8 +82,16 @@ export default {
       sidebar: true,
       items:[{title: 'Home', avatar: 'home'},{title: 'About', avatar: 'face'}],
       card_text: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.',
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+        grow: [3, 2, 1, 2],
+      items2: [{height:100, width: 100, index:0, style:{background:"rgba(245,163,59,.5)"}},
+               {top:0, height:100, width: 100, index:0, style:{background:"rgba(245,163,59,.5)"}}],
+      isBusy: false
     }
+  },
+  components: {
+    Waterfall,
+    WaterfallSlot
   },
   methods: {
    sendTestAjax(){
@@ -202,14 +102,82 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-   }
+   },
+  addItems: function () {
+    if (!this.isBusy && this.items2.length < 500) {
+      this.isBusy = true
+      this.items2.push.apply(this.items2, ItemFactory.get(50))
+    }
+  },
+  shuffle: function () {
+    this.items2.sort(function () {
+      return Math.random() - 0.5
+    })
+  },
+  reflowed: function () {
+    this.isBusy = false
+  }
+
   },
   mounted: function () {
     this.sendTestAjax()
+    // this.items2 = ItemFactory.get(100)
+    // console.log(this.items2[0])
 
   }
-
 }
+
+
+  // document.body.addEventListener('click', function () {
+  //   app.shuffle()
+  //   // app.$refs.waterfall.$emit('reflow') // manually trigger reflow action
+  // }, false)
+  // window.addEventListener('scroll', function () {
+  //   var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  //   if (scrollTop + window.innerHeight >= document.body.clientHeight) {
+  //     app.addItems()
+  //   }
+  // })
+
+
+var ItemFactory = (function () {
+
+  var lastIndex = 0
+
+  function generateRandomItems (count) {
+    var items = [], i
+    for (i = 0; i < count; i++) {
+      items[i] = {
+        index: lastIndex++,
+        style: {
+          background: getRandomColor()
+        },
+        width: 100 + ~~(Math.random() * 50),
+        height: 100 + ~~(Math.random() * 50)
+      }
+
+    }
+    return items
+  }
+
+  function getRandomColor () {
+    var colors = [
+      'rgba(21,174,103,.5)',
+      'rgba(245,163,59,.5)',
+      'rgba(255,230,135,.5)',
+      'rgba(194,217,78,.5)',
+      'rgba(195,123,177,.5)',
+      'rgba(125,205,244,.5)'
+    ]
+    return colors[~~(Math.random() * colors.length)]
+  }
+
+  return {
+    get: generateRandomItems
+  }
+
+})()
+
 </script>
 
 
