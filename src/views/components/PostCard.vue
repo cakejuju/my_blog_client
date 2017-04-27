@@ -2,42 +2,43 @@
   <v-card id="post-card">
     <!-- 头部 -->
     <v-card-row >
-<!--       <v-card-title :class="item.titleColor != null ? item.titleColor : 'blue accent-2'">
-        <span :class="item.titleTextColor != null ? item.titleTextColor : 'white--text'">{{item.title}}</span>
-        <v-spacer></v-spacer>
-        <div>
-          <v-menu id="marriot" bottom left origin="top right">
-            <v-btn icon="icon" slot="activator" :class="item.titleTextColor != null ? item.titleTextColor : 'white--text'">
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-            <v-list>
-              <v-list-item>
-                <v-list-tile>
-                  <v-list-tile-title>Never show rewards</v-list-tile-title>
-                </v-list-tile>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
-      </v-card-title>
- -->
+
       <v-list-tile avatar style="width:100%" :class="item.titleColor != null ? item.titleColor : 'white'">
+        <!-- 头像，可不用 -->
         <v-list-tile-avatar>
           <img v-bind:src="'/static/head.png'"/>
         </v-list-tile-avatar>
+
+
+
+        <v-icon style="float:left" :class="item.titleTextColor != null ? item.titleTextColor : 'grey--text text--darken-4'">play_arrow</v-icon>
+
+        <div v-for="tag in item.tag">
+          <v-chip label :class="item.titleTextColor != null ? '' : 'secondary white--text'" style="margin-right:0px">{{tag}}</v-chip>
+        </div>
+        <!-- <v-chip label style="margin-right:0px">胡扯</v-chip> -->
+
         <v-list-tile-content :class="item.titleTextColor != null ? item.titleTextColor : 'grey--text text--darken-4'">
-          <v-list-tile-title v-html="item.title" />
         </v-list-tile-content>
-        <v-list-tile-action bottom left origin="top right" >
+
+        <v-list-tile-action>
           <font style="font-weight: 300; font-size:15px" :class="item.titleTextColor != null ? item.titleTextColor : 'grey--text text--darken-4'"> 3 小时</font>
         </v-list-tile-action>
-      </v-list-tile>
 
+
+
+
+      </v-list-tile>
+    </v-card-row>
+    <v-card-row style="height:30px;margin-top:5px">
+      <v-card-title>
+        <span class="item.titleTextColor != null ? item.titleTextColor : 'grey--text text--darken-4'">{{item.title}}</span>
+      </v-card-title>
     </v-card-row>
     <!-- 文字 -->
     <v-card-text>
       <div>
-        <div v-html="item.content"></div>
+        <div v-html="item.content" ></div>
       </div>
     </v-card-text>
     <!-- 图片 -->
