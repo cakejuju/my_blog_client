@@ -6,7 +6,7 @@
       <v-text-field prepend-icon="search" label="Search..." hide-details single-line dark></v-text-field>
     </v-toolbar>
     <main>
-      <v-sidebar class="indigo darken-1" drawer v-model="sidebar" height="100%">
+      <v-sidebar class="blue-grey darken-1" drawer v-model="sidebar" height="100%">
         <v-list dense>
           <v-list-item v-for="(item,i) in items" :key="i">
             <v-list-tile>
@@ -50,9 +50,6 @@ export default {
 
   }
 }
-
-
 </script>
-
 
 
