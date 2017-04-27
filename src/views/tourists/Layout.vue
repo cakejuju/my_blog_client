@@ -6,15 +6,15 @@
       <v-text-field prepend-icon="search" label="Search..." hide-details single-line dark></v-text-field>
     </v-toolbar>
     <main>
-      <v-sidebar class="blue-grey darken-1" drawer v-model="sidebar" height="100%">
+      <v-sidebar class="blue-grey darken-1" left fixed v-model="sidebar" height="100%">
         <v-list dense>
-          <v-list-item v-for="(item,i) in items" :key="i">
-            <v-list-tile>
-              <v-list-tile-avatar>
+          <v-list-item v-for="(item,i) in items" :key="item.title">
+            <v-list-tile router :href="item.href">
+              <v-list-tile-avatar >
                 <v-icon>{{ item.avatar }}</v-icon>
               </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-text="item.title" />
+              <v-list-tile-content >
+                <v-list-tile-title v-text="item.title"/>
               </v-list-tile-content>
             </v-list-tile>
           </v-list-item>
@@ -38,18 +38,23 @@ export default {
   data () {
     return {
       sidebar: true,
-      items:[{title: 'Home', avatar: 'home'},{title: 'About', avatar: 'face'}]
+      items:[ {title: 'Home', avatar: 'home', href: '/tou/posts'},
+              {title: 'About', avatar: 'face', href: '/tou/about'}
+            ]
     }
   },
   components: {
   },
   methods: {
-
+    navigate(url){
+      this.$router.push(url)
+    }
   },
   mounted: function () {
 
   }
 }
 </script>
+
 
 

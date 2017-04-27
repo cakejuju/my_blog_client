@@ -7,7 +7,7 @@ import Home from '../views/Home'
 import About from '../views/About'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
-
+import TAbout from '../views/tourists/About'
 
 Vue.use(Router)
 
@@ -26,7 +26,9 @@ export default new Router({
       path: '/tou/',
       name: 'touristsPages',
       component: TLayout,
-      children: [ {path: 'posts', component: TPosts, name: 'posts', meta: {title: 'all blogs'}}
+      children: [ {path: 'posts', component: TPosts, name: 'posts', meta: {title: 'all blogs'}},
+                  {path: 'about', component: TAbout, name: 'tabout', meta: {title: '关于本站'}}
+          
           ]
     }
 

@@ -1,7 +1,6 @@
 <template>
   
    <div class="row" style="width:100%;">
-
      <!-- 最左边的一列 -->
      <div style="width:33.33%;height:100%; float:left">
        <v-col xs12 v-for="item in wfData.left" :key="item.id" style="margin:20px">
@@ -191,6 +190,11 @@ export default {
 
 </script>
 
+<style>
+body {
+  background: #f0eff2
+}
+</style>
 
 
 
