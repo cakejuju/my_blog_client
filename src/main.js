@@ -13,7 +13,7 @@ Vue.prototype.axios = axios  //用来发送ajax
 
 /* eslint-disable no-new */
 // 下方约定太多 所以可以不细看
-new Vue({
+var MyPost = new Vue({
   el: '#app',
   router,
   template: '<App/>',  
