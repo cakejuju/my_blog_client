@@ -21,25 +21,33 @@
         </v-list-tile-content>
 
         <v-list-tile-action>
-          <font style="font-weight: 300; font-size:15px" :class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'"> 3 小时</font>
+          <font style="font-weight: 300; font-size:15px" :class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.written_time}}</font>
         </v-list-tile-action>
 
 
       </v-list-tile>
     </v-card-row>
-    <v-card-row style="height:30px;margin-top:5px">
+    <v-card-row style="height:30px;margin-top:5px" >
       <v-card-title>
         <span class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
     <!-- 文字 -->
+  
     <v-card-text>
-      <div>
-        <div v-html="item.content" ></div>
-      </div>
+      <v-card-row @click.native="$router.push('/tou/posts/' + item.id)">
+        <div >
+          <div v-html="item.l_content" ></div>
+        </div>
+      </v-card-row>
+
     </v-card-text>
+
+
+
     <!-- 图片 -->
-    <v-card-row v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url height="240px"></v-card-row>
+    <v-card-row v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url :height=imgHeight>
+    </v-card-row>
     <!-- 底部 -->
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'blue-grey darken-2'">
       <v-btn flat :class="item.bottom_text_color != null ? item.bottom_text_color : 'white--text'">点赞呐</v-btn>
@@ -58,6 +66,10 @@
       item: {
         type: Object,
         required: true
+      },
+      imgHeight: {
+        type: String,
+        required: true        
       }
     }
   }

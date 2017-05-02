@@ -41,6 +41,7 @@ export default {
     return {
       sidebar: true,
       items:[ {title: '首页', avatar: 'home', divider: false, href: '/tou/posts'},
+              {title: '三列模式', avatar: 'face', divider: false, href: '/tou/posts/three_columns'},
               {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
               {title: '建设中...', avatar: 'build', divider: true, href: '/'}
             ]

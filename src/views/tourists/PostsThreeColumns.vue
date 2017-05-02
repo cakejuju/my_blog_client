@@ -2,17 +2,23 @@
   
    <div class="row" style="width:100%;" >
      <!-- 最左边的一列 -->
-     <div style="width:50%;height:100%; float:left">
+     <div style="width:33.33%;height:100%; float:left">
        <v-col xs12 v-for="item in wfData.left" :key="item.id" style="margin:20px 6px">
-        <post-card  :item="item" :imgHeight="'400px'"></post-card>
+        <post-card  :item="item" :imgHeight="'240px'"></post-card>
         </v-col>
      </div>
 
+     <!-- 中间的一列 -->
+     <div style="width:33.33%;height:100%; float:left">
+       <v-col xs12 v-for="item in wfData.mid" :key="item.id" style="margin:20px 6px">
+         <post-card  :item="item" :imgHeight="'240px'"></post-card>
+       </v-col>
+     </div>
 
      <!-- 最右边的一列 -->
-     <div style="width:50%;height:100%; float:left">
+     <div style="width:33.33%;height:100%; float:left">
        <v-col xs12 v-for="item in wfData.right" :key="item.id" style="margin:20px 6px">
-         <post-card  :item="item" :imgHeight="'400px'"></post-card>
+         <post-card  :item="item" :imgHeight="'240px'"></post-card>
        </v-col>
      </div>
 
@@ -43,7 +49,7 @@ export default {
   methods: {
     sortPosts(item){
       // 若总高度相等 则随机分配, 否则分配给小的 然后增加高度
-      let min = Math.min(this.leftHeight,this.rightHeight)
+      let min = Math.min(this.leftHeight,this.rightHeight,this.midHeight)
 
       if (this.leftHeight === min) {
         this.wfData.left.push(item)
@@ -51,6 +57,9 @@ export default {
       }else if(this.rightHeight === min){
         this.wfData.right.push(item)
         this.rightHeight += (item.height + 40)
+      }else if(this.midHeight === min){
+        this.wfData.mid.push(item)
+        this.midHeight += (item.height + 40)
       }
     },
     getPosts(){
@@ -90,6 +99,11 @@ export default {
 
 </script>
 
+<style>
+body {
+  background: #e0e0e0
+}
+</style>
 
 
 

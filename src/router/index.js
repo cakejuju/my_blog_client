@@ -8,6 +8,9 @@ import About from '../views/About'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
+import TPost from '../views/tourists/Post' // 单个post
+import PostsTwoColumns from '../views/tourists/PostsThreeColumns' // 每行三列的post
+
 
 Vue.use(Router)
 
@@ -17,9 +20,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: TLayout, // TODO 首页重新做
-      children: [ {path: 'about', component: About, name: 'about', meta: {title: '关于本站'}}
-          ]
+      component: TLayout
     },
 
     {
@@ -27,7 +28,9 @@ export default new Router({
       name: 'touristsPages',
       component: TLayout,
       children: [ {path: 'posts', component: TPosts, name: 'posts', meta: {title: 'all blogs'}},
-                  {path: 'about', component: TAbout, name: 'tabout', meta: {title: '关于本站'}}
+                  {path: 'posts/three_columns', component: PostsTwoColumns, name: 'postsThreeColumns', meta: {title: 'postsThreeColumns'}},
+                  {path: 'about', component: TAbout, name: 'tabout', meta: {title: '关于本站'}},
+                  {path: 'posts/:id', component: TPost, name: 'postDetail', meta: {title: '内容'}},
           
           ]
     }
