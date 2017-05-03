@@ -9,11 +9,10 @@
           <img v-bind:src="'/static/head.png'"/>
         </v-list-tile-avatar>
 
-
         <v-icon style="float:left" :class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">play_arrow</v-icon>
 
         <div v-for="tag in item.tag_names">
-          <v-chip @click.native="$router.push('/tou/about' + tag.id)"  label :class="item.title_text_color != null ? '' : 'secondary white--text'" style="margin-right:0px">{{tag.name}}</v-chip>
+          <v-chip @click.native="tagClicked(tag.id)"  label :class="item.title_text_color != null ? '' : 'secondary white--text'" style="margin-right:0px">{{tag.name}}</v-chip>
         </div>
         <!-- <v-chip label style="margin-right:0px">胡扯</v-chip> -->
 
@@ -70,6 +69,12 @@
       imgHeight: {
         type: String,
         required: true        
+      }
+    },
+    methods:{
+      tagClicked(id){
+        this.$emit('tagClicked', id)
+        console.log('最底层组建被点击: id' + id)
       }
     }
   }

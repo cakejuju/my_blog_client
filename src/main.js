@@ -10,7 +10,7 @@ import Vuetify from 'vuetify'
 Vue.use(Vuetify)  // 使用 vuetify 作为组件库
 Vue.config.productionTip = false
 Vue.prototype.axios = axios  //用来发送ajax 
-
+window.tag_id = 'test'
 /* eslint-disable no-new */
 // 下方约定太多 所以可以不细看
 var MyPost = new Vue({

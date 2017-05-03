@@ -1,28 +1,6 @@
 <template>
-  
-   <div class="row" style="width:100%;" >
-     <!-- 最左边的一列 -->
-     <div style="width:33.33%;height:100%; float:left">
-       <v-col xs12 v-for="item in wfData.left" :key="item.id" style="margin:20px 6px">
-        <post-card  :item="item" :imgHeight="'240px'"></post-card>
-        </v-col>
-     </div>
-
-     <!-- 中间的一列 -->
-     <div style="width:33.33%;height:100%; float:left">
-       <v-col xs12 v-for="item in wfData.mid" :key="item.id" style="margin:20px 6px">
-         <post-card  :item="item" :imgHeight="'240px'"></post-card>
-       </v-col>
-     </div>
-
-     <!-- 最右边的一列 -->
-     <div style="width:33.33%;height:100%; float:left">
-       <v-col xs12 v-for="item in wfData.right" :key="item.id" style="margin:20px 6px">
-         <post-card  :item="item" :imgHeight="'240px'"></post-card>
-       </v-col>
-     </div>
-
-   </div>
+   <three-columns-posts :postsData="wfData">
+   </three-columns-posts>
 </template>
 
 
@@ -30,6 +8,8 @@
 var marked = require('marked'); // 引入marked (markdown to html)
 
 import PostCard from '../components/PostCard'
+import ThreeColumnsPosts from '../components/ThreeColumnsPosts'
+
 
 export default {
   name: '',
@@ -44,7 +24,8 @@ export default {
     }
   },
   components: {
-    'post-card': PostCard
+    'post-card': PostCard,
+    'three-columns-posts': ThreeColumnsPosts
   },
   methods: {
     sortPosts(item){
@@ -88,6 +69,9 @@ export default {
        .catch(function (error) {   
          console.log(error);   
        });   
+
+    },
+    tagClicked(id){
 
     }
   },

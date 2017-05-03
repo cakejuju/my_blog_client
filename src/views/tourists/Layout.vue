@@ -22,7 +22,7 @@
         </v-list>
       </v-sidebar>
 
-      <router-view style="margin-top:80px" ></router-view>
+      <router-view style="margin-top:80px;width:100%" ></router-view>
     </main>
 
     <v-footer>

@@ -1,48 +1,52 @@
 <template>
-  
-   <div class="row" style="width:100%;" >
-     <!-- 最左边的一列 -->
-     <div style="width:50%;height:100%; float:left">
-       <v-col xs12 v-for="item in wfData.left" :key="item.id" style="margin:20px 6px">
-        <post-card  :item="item" :imgHeight="'400px'"></post-card>
-        </v-col>
-     </div>
+
+  <div>
+    <v-col md6 sm12 xs12 style="position: fixed;right: 10px;bottom: 10px;z-index:100">
+        <div>
+          <v-btn v-on:click.native="" class="blue-grey">
+            Upload
+            <v-icon right>clear</v-icon>
+          </v-btn>
+
+        </div>
+
+    </v-col>
+
+    <two-columns-posts :postsData="wfData" @tagClicked="tagClicked">
+    </two-columns-posts>
+  </div>
 
 
-     <!-- 最右边的一列 -->
-     <div style="width:50%;height:100%; float:left">
-       <v-col xs12 v-for="item in wfData.right" :key="item.id" style="margin:20px 6px">
-         <post-card  :item="item" :imgHeight="'400px'"></post-card>
-       </v-col>
-     </div>
 
-   </div>
 </template>
 
 
 <script>
 var marked = require('marked'); // 引入marked (markdown to html)
 
-import PostCard from '../components/PostCard'
+import TwoColumnsPosts from '../components/TwoColumnsPosts'
 
 export default {
   name: '',
   data () {
-    return {
+    return {    
       wfData: {left:[], right:[], mid:[]},
       leftHeight: 0,
       rightHeight: 0,
       midHeight: 0,
-      sidebar: true,
-      items: []
+      items: [],
+      clickedTag: []
     }
   },
   components: {
-    'post-card': PostCard
+    'two-columns-posts': TwoColumnsPosts
   },
   methods: {
     sortPosts(item){
       // 若总高度相等 则随机分配, 否则分配给小的 然后增加高度
+      // 渲染
+      // 当文章内容很多时,就用最大的height,这时height会相等 
+      // 当文章内容小于最大的height时,则按文章的所有内容加载
       let min = Math.min(this.leftHeight,this.rightHeight)
 
       if (this.leftHeight === min) {
@@ -53,9 +57,8 @@ export default {
         this.rightHeight += (item.height + 40)
       }
     },
-    getPosts(){
-       let order_params = {sort_by: 'created_at', order: 'ASC'}
-       this.axios.post('/api/get_posts', {limit:30, current_page: 1, order_params: order_params})    
+    getPosts(params){
+       this.axios.post('/api/get_posts', params)    
        .then((response) => {   
           let posts = response.data.json_data
           for(let i = 0; i < posts.length; i++){
@@ -66,26 +69,53 @@ export default {
               posts[i].l_content = marked(l_content)
             }
           } 
-
           this.items = posts
-          console.log(this.items)
-          // 渲染
-          // 当文章内容很多时,就用最大的height,这时height会相等 
-          // 当文章内容小于最大的height时,则按文章的所有内容加载
-          for(var i=0; i < this.items.length; i++){
+
+          for(let i=0; i < this.items.length; i++){
             this.sortPosts(this.items[i])
           }
        })    
-       .catch(function (error) {   
-         console.log(error);   
-       });   
 
+    },
+    initView(){
+     let order_params = {sort_by: 'created_at', order: 'ASC'}
+     let query_params = {limit:30, current_page: 1, order_params: order_params}
+     this.getPosts(query_params)
+    },
+    tagClicked(id){
+      this.clickedTag.push(id) 
+      this.clickedTag = this.clickedTag.filter( onlyUnique ); 
+      this.flushData()
+
+      let related_object = {through_model: 'Pt', 
+                            related_model: 'Tag',
+                            key: 'tag_id', 
+                            value: this.clickedTag, 
+                            group: 'post_id'}
+      let order_params = {sort_by: 'created_at', order: 'DESC'}
+      let query_params = {tag_id: this.clickedTag, 
+                          limit:          30, 
+                          current_page:   1,
+                          order_params:   order_params,
+                          related_object: related_object}
+      this.getPosts(query_params)
+    },
+    flushData(){
+      this.wfData = {left:[], right:[], mid:[]}
+      this.leftHeight = 0
+      this.rightHeight = 0
+      this.midHeight = 0      
     }
+
+
   },
   mounted: function () {
-    this.getPosts()
-
+    this.initView()
   }
+}
+
+function onlyUnique(value, index, self) { 
+  return self.indexOf(value) === index;
 }
 
 </script>
