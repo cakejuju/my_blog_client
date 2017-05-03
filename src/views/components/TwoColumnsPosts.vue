@@ -39,15 +39,13 @@ import PostCard from '../components/PostCard'
     },
     data () {
       return {
-        // columns: ['left','right'],
         columns: [{data: 'left', style: 'width:50%;height:100%; float:left'}, 
                   {data: 'right', style: 'width:50%;height:100%; float:right'}]
       }
     },
     methods:{
-      tagClicked(id){
-        console.log('两列子组件被点击：' + id)
-        this.$emit('tagClicked', id)
+      tagClicked(id, name){
+        this.$emit('tagClicked', id, name)
       }
     }
   }

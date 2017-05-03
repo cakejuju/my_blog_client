@@ -1,23 +1,17 @@
 <template>
-
   <div>
-    <v-col md6 sm12 xs12 style="position: fixed;right: 10px;bottom: 10px;z-index:100">
-        <div>
-          <v-btn v-on:click.native="" class="blue-grey">
-            Upload
-            <v-icon right>clear</v-icon>
-          </v-btn>
-
-        </div>
-
+    <v-col md6 sm12 xs12 style="position: fixed;right: 15px;bottom: 30px;z-index:100">
+      <div v-for="tag in Object.keys(clickedTag)">
+        <v-btn v-on:click.native="tagRemoved(tag)" class="blue darken-3">
+          {{tag}}
+          <v-icon right>clear</v-icon>
+        </v-btn>
+      </div>
     </v-col>
 
-    <two-columns-posts :postsData="wfData" @tagClicked="tagClicked">
+    <two-columns-posts :postsData="wfData" @tagClicked="tagAdded">
     </two-columns-posts>
   </div>
-
-
-
 </template>
 
 
@@ -35,7 +29,7 @@ export default {
       rightHeight: 0,
       midHeight: 0,
       items: [],
-      clickedTag: []
+      clickedTag: {}
     }
   },
   components: {
@@ -58,8 +52,8 @@ export default {
       }
     },
     getPosts(params){
-       this.axios.post('/api/get_posts', params)    
-       .then((response) => {   
+      this.axios.post('/api/get_posts', params)    
+        .then((response) => {   
           let posts = response.data.json_data
           for(let i = 0; i < posts.length; i++){
             let content = posts[i].content
@@ -71,34 +65,38 @@ export default {
           } 
           this.items = posts
 
-          for(let i=0; i < this.items.length; i++){
-            this.sortPosts(this.items[i])
-          }
-       })    
+        for(let i=0; i < this.items.length; i++){
+          this.sortPosts(this.items[i])
+        }
+      })    
+    },
+    queryTagPost(){
+      this.flushData()
 
+      let related_object = {through_model: 'Pt', 
+                            related_model: 'Tag',
+                            key: 'tag_id', 
+                            value: Object.values(this.clickedTag), 
+                            group: 'post_id'}
+      let order_params = {sort_by: 'created_at', order: 'ASC'}
+      let query_params = {limit:          30, 
+                          current_page:   1,
+                          order_params:   order_params,
+                          related_object: related_object}
+      this.getPosts(query_params)
     },
     initView(){
      let order_params = {sort_by: 'created_at', order: 'ASC'}
      let query_params = {limit:30, current_page: 1, order_params: order_params}
      this.getPosts(query_params)
     },
-    tagClicked(id){
-      this.clickedTag.push(id) 
-      this.clickedTag = this.clickedTag.filter( onlyUnique ); 
-      this.flushData()
-
-      let related_object = {through_model: 'Pt', 
-                            related_model: 'Tag',
-                            key: 'tag_id', 
-                            value: this.clickedTag, 
-                            group: 'post_id'}
-      let order_params = {sort_by: 'created_at', order: 'DESC'}
-      let query_params = {tag_id: this.clickedTag, 
-                          limit:          30, 
-                          current_page:   1,
-                          order_params:   order_params,
-                          related_object: related_object}
-      this.getPosts(query_params)
+    tagAdded(id, name){
+      this.clickedTag[name] = id
+      this.queryTagPost()
+    },
+    tagRemoved(name){
+      delete this.clickedTag[name]
+      this.queryTagPost()
     },
     flushData(){
       this.wfData = {left:[], right:[], mid:[]}

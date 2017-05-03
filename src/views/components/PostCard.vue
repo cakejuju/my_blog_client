@@ -12,7 +12,7 @@
         <v-icon style="float:left" :class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">play_arrow</v-icon>
 
         <div v-for="tag in item.tag_names">
-          <v-chip @click.native="tagClicked(tag.id)"  label :class="item.title_text_color != null ? '' : 'secondary white--text'" style="margin-right:0px">{{tag.name}}</v-chip>
+          <v-chip @click.native="tagClicked(tag.id, tag.name)"  label :class="item.title_text_color != null ? '' : 'secondary white--text'" style="margin-right:0px">{{tag.name}}</v-chip>
         </div>
         <!-- <v-chip label style="margin-right:0px">胡扯</v-chip> -->
 
@@ -48,11 +48,11 @@
     <v-card-row v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url :height=imgHeight>
     </v-card-row>
     <!-- 底部 -->
-    <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'blue-grey darken-2'">
-      <v-btn flat :class="item.bottom_text_color != null ? item.bottom_text_color : 'white--text'">点赞呐</v-btn>
+    <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
+      <v-btn flat :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">点赞呐</v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-icon :class="item.bottom_text_color != null ? item.bottom_text_color : 'white--text'">comment</v-icon>
+        <v-icon :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">comment</v-icon>
       </v-btn>
     </v-card-row>
   </v-card>
@@ -72,9 +72,8 @@
       }
     },
     methods:{
-      tagClicked(id){
-        this.$emit('tagClicked', id)
-        console.log('最底层组建被点击: id' + id)
+      tagClicked(id, name){
+        this.$emit('tagClicked', id, name)
       }
     }
   }
