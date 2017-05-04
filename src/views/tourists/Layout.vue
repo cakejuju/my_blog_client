@@ -3,7 +3,7 @@
     <v-toolbar  class="red" fixed>
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
       <v-toolbar-title class="hidden-sm-and-down">My Blog</v-toolbar-title>
-      <v-text-field prepend-icon="search" label="Search..." hide-details single-line dark></v-text-field>
+      <v-text-field prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
     </v-toolbar>
     <main>
       <v-sidebar class="grey lighten-2" left fixed v-model="sidebar" height="100%">
@@ -20,14 +20,15 @@
             </v-list-tile>
           </v-list-item>
         </v-list>
+        <div class="text-xs4right" style="position: fixed;left: 15px;bottom: 10px">© 2017  Joey</div>
       </v-sidebar>
 
       <router-view style="margin-top:80px;width:100%" ></router-view>
     </main>
 
-    <v-footer>
+<!--     <v-footer>
       <div class="text-xs4right">© 2017  Joey</div>
-    </v-footer>
+    </v-footer> -->
 
   </v-app>
 </template>

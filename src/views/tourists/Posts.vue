@@ -1,14 +1,11 @@
 <template>
   <div>
-    <v-col md6 sm12 xs12 style="position: fixed;right: 15px;bottom: 30px;z-index:100">
-      <div v-for="tag in Object.keys(clickedTag)">
-        <v-btn v-on:click.native="tagRemoved(tag)" class="blue darken-3">
-          {{tag}}
-          <v-icon right>clear</v-icon>
-        </v-btn>
-      </div>
-    </v-col>
-
+    <div>
+      <v-btn v-for="tag in Object.keys(clickedTag)" round  v-on:click.native="tagRemoved(tag)" class="blue darken-3" :key="tag">
+        {{tag}}
+        <v-icon right>clear</v-icon>
+      </v-btn>
+    </div>
     <two-columns-posts :postsData="wfData" @tagClicked="tagAdded">
     </two-columns-posts>
   </div>
@@ -24,7 +21,7 @@ export default {
   name: '',
   data () {
     return {    
-      wfData: {left:[], right:[], mid:[]},
+      wfData: {left:[], right:[], mid:[],all:[]},
       leftHeight: 0,
       rightHeight: 0,
       midHeight: 0,
@@ -65,9 +62,11 @@ export default {
           } 
           this.items = posts
 
-        for(let i=0; i < this.items.length; i++){
-          this.sortPosts(this.items[i])
-        }
+          this.wfData.all = posts
+
+          for(let i=0; i < this.items.length; i++){
+            this.sortPosts(this.items[i])
+          }
       })    
     },
     queryTagPost(){
@@ -78,7 +77,7 @@ export default {
                             key: 'tag_id', 
                             value: Object.values(this.clickedTag), 
                             group: 'post_id'}
-      let order_params = {sort_by: 'created_at', order: 'ASC'}
+      let order_params = {sort_by: 'created_at', order: 'DESC'}
       let query_params = {limit:          30, 
                           current_page:   1,
                           order_params:   order_params,
@@ -86,7 +85,7 @@ export default {
       this.getPosts(query_params)
     },
     initView(){
-     let order_params = {sort_by: 'created_at', order: 'ASC'}
+     let order_params = {sort_by: 'created_at', order: 'DESC'}
      let query_params = {limit:30, current_page: 1, order_params: order_params}
      this.getPosts(query_params)
     },
@@ -99,7 +98,7 @@ export default {
       this.queryTagPost()
     },
     flushData(){
-      this.wfData = {left:[], right:[], mid:[]}
+      this.wfData = {left:[], right:[], mid:[], all:[]}
       this.leftHeight = 0
       this.rightHeight = 0
       this.midHeight = 0      
@@ -115,6 +114,7 @@ export default {
 function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
 }
+
 
 </script>
 

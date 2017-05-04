@@ -43,11 +43,12 @@
     </v-card-text>
 
 
-
     <!-- 图片 -->
-    <v-card-row v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url :height=imgHeight>
+    <v-card-row>
+      <img v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url :src="item.img_url" style="width:100%;height:auto"></img>
     </v-card-row>
     <!-- 底部 -->
+
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
       <v-btn flat :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">点赞呐</v-btn>
       <v-spacer></v-spacer>
@@ -55,6 +56,8 @@
         <v-icon :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">comment</v-icon>
       </v-btn>
     </v-card-row>
+
+
   </v-card>
 </template>
 
