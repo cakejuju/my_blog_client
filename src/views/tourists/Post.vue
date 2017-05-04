@@ -1,21 +1,38 @@
 <template>
-   <div class="row" style="width:100%;" >
+  <div>
+    
+    <v-row >
 
-<!--      <div style="width:10%;height:100%; float:left; ">
-
-      <v-icon style="font-size:80px;position:fixed;top:50%;transform:translate(-50%,-50%);z-index:100" x-large class="grey--text text--darken-2">keyboard_arrow_left</v-icon>
-     </div> -->
+     <v-col xs1 sm1 lg1 xl1 style="float:left;">
+     </v-col >
 
      <!-- 中间的一列 -->
-     <div style="width:100%;height:100%; float:left;">
-       <!-- <v-col xs12 v-for="item in wfData.mid" :key="item.id" style="margin:20px 6px"> -->
+     <v-col xs10 sm10 lg10 xl10 style="float:left;">
          <post-card  :item="post" :imgHeight="'500px'"></post-card>
-       <!-- </v-col> -->
-     </div>
+     </v-col>
 
+     <v-col xs1 sm1 lg1 xl1 style="float:left;">
+     </v-col >
      <!-- TODO: 点击左右切换 post -->
+    </v-row>
 
-   </div>
+
+    <v-card style="width:100%;box-sizing:''; margin-top:5px" >
+      <v-card-row actions style=" background: #e0e0e0;  ">
+        <v-btn v-if="earlier_post!=null" @click.native="getPosts(earlier_post.id)" flat :class="'grey--text text--darken-4'">{{earlier_post.title}}</v-btn>
+        <v-spacer></v-spacer>
+   <!--      <v-btn icon>
+          <v-icon :class="'grey--text text--darken-4'">keyboard_arrow_right</v-icon>
+        </v-btn> -->
+
+        <v-btn v-if="later_post!=null" @click.native="getPosts(later_post.id)" flat :class="'grey--text text--darken-4'">{{later_post.title}}</v-btn>
+
+      </v-card-row>
+    </v-card>
+  </div>
+
+
+   
 </template>
 
 <script>
@@ -27,34 +44,37 @@ export default {
   name: '',
   data () {
     return {
-      wfData: {left:[], right:[], mid:[]},
+      whichOne: 2,
       midHeight: 0,
       items: [],
-      post: {}
+      post: {},
+      earlier_post: {},
+      later_post: {}
     }
   },
   components: {
     'post-card': PostCard
   },
   methods: {
-    sortPosts(item){
+    initData(data){
+      this.post = data.post
+      this.earlier_post = data.earlier_post
+      this.later_post = data.later_post
+      this.post.l_content = marked(this.post.content)
     },
-    getPosts(){
-       this.axios.post('/api/get_posts_by_id', {id: this.$route.params.id})    
+    getPosts(id){
+       this.axios.post('/api/get_posts_by_id', {id: id})    
        .then((response) => {   
-          let post = response.data
-          post.content = marked(post.content)
-          post.l_content = marked(post.content)
-          this.post = response.data
-          this.post.l_content = marked(this.post.content)
+          console.log(response.data)
+          this.initData(response.data)
        })    
        .catch(function (error) {   
          console.log(error);   
        });   
-  }
+    }
  },
    mounted: function () {
-    this.getPosts()
+    this.getPosts(this.$route.params.id)
   }
 }
 

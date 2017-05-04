@@ -2,35 +2,34 @@
 
   <div>
     <!-- <h2 >{{windowWidth}}</h2> -->
-    <div class="row" v-if="windowWidth<1200">
+    <!-- 小屏幕只显示一列 -->
+    <div class="row" v-if="windowWidth < 1200">
       <v-col xs12 sm12 lg12 xl12 v-for="item in postsData.all" :key="item" style="margin:20px 0px;">
-         <post-card :item="item" :imgHeight="'350px'"  @tagClicked="tagClicked"/>
+         <post-card :item="item"  @tagClicked="tagClicked"/>
       </v-col>
     </div>
 
-     <div class="row" v-if="windowWidth>=1200">
-
-       <div style="width:50%; height:100%; float:left">
+    <!-- 大屏幕显示两列 -->
+    <div class="row" v-if="windowWidth >= 1200">
+        <!-- 左侧 -->
+       <div style="width:50%; float:left">
          <v-col xs12 v-for="item in postsData.left" :key="item.id" style="margin:20px 6px">
-          <post-card  :item="item" :imgHeight="'400px'"  @tagClicked="tagClicked"></post-card>
-          </v-col>
+          <post-card  :item="item"  @tagClicked="tagClicked"></post-card>
+         </v-col>
        </div>
-
-       <div style="width:50%;height:100%; float:left">
+       <!-- 右侧 -->
+       <div style="width:50%;float:left">
          <v-col xs12 v-for="item in postsData.right" :key="item.id" style="margin:20px 6px">
-           <post-card  :item="item" :imgHeight="'400px'" @tagClicked="tagClicked"></post-card>
+           <post-card  :item="item" @tagClicked="tagClicked"></post-card>
          </v-col>
        </div>
     </div>
-
+ 
   </div>
 
 
 
 </template>
-
-<style>
-</style>
 
 <script>
 

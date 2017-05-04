@@ -83,11 +83,7 @@ export default {
 
 </script>
 
-<style>
-body {
-  background: #e0e0e0
-}
-</style>
+
 
 
 

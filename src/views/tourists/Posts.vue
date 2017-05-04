@@ -11,7 +11,11 @@
   </div>
 </template>
 
-
+<style>
+body {
+  background: #e0e0e0
+}
+</style>
 <script>
 var marked = require('marked'); // 引入marked (markdown to html)
 
