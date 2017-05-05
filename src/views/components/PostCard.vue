@@ -1,5 +1,5 @@
 <template>
-  <v-card id="post-card">
+  <v-card id="post-card" >
     <!-- 头部 -->
     <v-card-row >
 
@@ -25,13 +25,13 @@
 
 
     </v-card-row>
-    <v-card-row style="height:30px;margin-top:5px" >
+    <v-card-row >
       <v-card-title>
         <span class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
+
     <!-- 文字 -->
-  
     <v-card-text>
       <v-card-row @click.native="$router.push('/tou/posts/' + item.id)">
         <div >
@@ -58,24 +58,58 @@
 
 
     <transition name="slide-fade">
-      <v-list v-if="showCommentValue" three-line >
-        <template v-for="i in 30">
+      <v-list v-if="showCommentValue" style="max-height:18em;overflow: scroll" three-line >
 
-          <v-list-item v-bind:key="'title'">
+        <template v-for="i in 6">
+
+<!--           <v-list-item v-bind:key="'title'">
             <v-list-tile avatar>
               <v-list-tile-avatar>
                 <img v-bind:src="'/static/head.png'"/>
               </v-list-tile-avatar>
-              <v-list-tile-content>
+              <v-list-tile-content >
                 <v-list-tile-title v-html="'<p>某位游客</p>'"/>
-                <v-list-tile-sub-title v-html="'<p>说得好</p>'"/>
+                <v-list-tile-sub-title style="max-height:18em;overflow: scroll" v-html="'<p>说得好</p><p>说得好</p><p>说得好</p><p>说得好</p><p>说得好</p>'"/>
               </v-list-tile-content>
-
               <v-list-tile-action>
                 <p style="font-weight:200">5小时</p>
               </v-list-tile-action>
             </v-list-tile>
+            <v-divider ></v-divider>
           </v-list-item>
+ -->
+      <v-card>
+        <v-list-tile avatar style="width:100%;" :class="'white'">
+          <!-- 头像，可不用 -->
+          <v-list-tile-avatar >
+            <img v-bind:src="'/static/head.png'"/>
+          </v-list-tile-avatar>
+
+          <v-list-tile-content :class="'grey--text text--darken-4'">
+            <v-list-tile-title v-html="'<p>某位游客</p>'" />
+          </v-list-tile-content>
+
+          <v-list-tile-action>
+            <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
+          </v-list-tile-action>
+        </v-list-tile>
+
+
+          <v-card-text style="padding-top:0px;padding-bottom:0px;">
+            <v-card-row style="">
+              <!-- <div style="width:100%;"> -->
+                <!-- <div style="width:10%;float:left;height:1px"></div> -->
+                <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
+              <!-- </div> -->
+            </v-card-row>
+          </v-card-text>
+
+
+
+
+      </v-card>
+
+
         </template>
       </v-list>
 
