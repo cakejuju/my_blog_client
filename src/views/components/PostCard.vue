@@ -22,12 +22,11 @@
           <font style="font-weight: 300; font-size:15px" :class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.written_time}}</font>
         </v-list-tile-action>
       </v-list-tile>
-
-
     </v-card-row>
-    <v-card-row >
+
+    <v-card-row style="height:20px;margin-top:5px">
       <v-card-title>
-        <span class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
+        <span style="font-size:17px;font-weight:500" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
 
@@ -58,61 +57,46 @@
 
 
     <transition name="slide-fade">
-      <v-list v-if="showCommentValue" style="max-height:18em;overflow: scroll" three-line >
-
+      <div v-if="showCommentValue">
+      <v-list  style="max-height:18em;overflow: scroll" three-line >
         <template v-for="i in 6">
-
-<!--           <v-list-item v-bind:key="'title'">
-            <v-list-tile avatar>
-              <v-list-tile-avatar>
+          <v-card>
+            <v-list-tile avatar style="width:100%;" :class="'white'">
+              <!-- 头像，可不用 -->
+              <v-list-tile-avatar >
                 <img v-bind:src="'/static/head.png'"/>
               </v-list-tile-avatar>
-              <v-list-tile-content >
-                <v-list-tile-title v-html="'<p>某位游客</p>'"/>
-                <v-list-tile-sub-title style="max-height:18em;overflow: scroll" v-html="'<p>说得好</p><p>说得好</p><p>说得好</p><p>说得好</p><p>说得好</p>'"/>
+
+              <v-list-tile-content :class="'grey--text text--darken-4'">
+                <v-list-tile-title v-html="'<p>某位游客</p>'" />
               </v-list-tile-content>
+
               <v-list-tile-action>
-                <p style="font-weight:200">5小时</p>
+                <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
               </v-list-tile-action>
             </v-list-tile>
-            <v-divider ></v-divider>
-          </v-list-item>
- -->
-      <v-card>
-        <v-list-tile avatar style="width:100%;" :class="'white'">
-          <!-- 头像，可不用 -->
-          <v-list-tile-avatar >
-            <img v-bind:src="'/static/head.png'"/>
-          </v-list-tile-avatar>
 
-          <v-list-tile-content :class="'grey--text text--darken-4'">
-            <v-list-tile-title v-html="'<p>某位游客</p>'" />
-          </v-list-tile-content>
-
-          <v-list-tile-action>
-            <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
-          </v-list-tile-action>
-        </v-list-tile>
-
-
-          <v-card-text style="padding-top:0px;padding-bottom:0px;">
-            <v-card-row style="">
-              <!-- <div style="width:100%;"> -->
-                <!-- <div style="width:10%;float:left;height:1px"></div> -->
-                <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
-              <!-- </div> -->
-            </v-card-row>
-          </v-card-text>
-
-
-
-
-      </v-card>
-
-
+              <v-card-text style="padding-top:0px;padding-bottom:0px;">
+                <v-card-row style="">
+                  <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
+                </v-card-row>
+              </v-card-text>
+          </v-card>
         </template>
       </v-list>
 
+
+      <v-card-text>
+        <v-list-tile-avatar style="justify-content: flex-start;">
+          <img v-bind:src="'/static/head.png'" />
+        </v-list-tile-avatar>
+
+        <v-text-field style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是评论区呀" >
+        </v-text-field>
+        
+      </v-card-text>
+
+   </div>
 
     </transition>
 
@@ -124,6 +108,7 @@
 
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
+
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
