@@ -64,6 +64,7 @@ export default {
               posts[i].l_content = marked(l_content)
             }
           } 
+          console.log(document.cookie)
           this.items = posts
 
           this.wfData.all = posts

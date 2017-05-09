@@ -48,67 +48,85 @@
     <!-- 底部 -->
 
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
-      <v-btn flat :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">点赞呐</v-btn>
+
+
+      <v-btn icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
+        <v-icon >plus_one</v-icon>
+      </v-btn>
+
+
+        
+
       <v-spacer></v-spacer>
-      <v-btn @click.native="showCommentValue = !showCommentValue" icon>
-        <v-icon :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">comment</v-icon>
+      <v-btn @click.native="showCommentValue = !showCommentValue" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
+        <v-icon >comment</v-icon>
       </v-btn>
     </v-card-row>
 
 
     <transition name="slide-fade">
       <div v-if="showCommentValue">
-      <v-list  style="max-height:18em;overflow: scroll" three-line >
-        <template v-for="i in 6">
-          <v-card>
-            <v-list-tile avatar style="width:100%;" :class="'white'">
-              <!-- 头像，可不用 -->
-              <v-list-tile-avatar >
-                <img v-bind:src="'/static/head.png'"/>
-              </v-list-tile-avatar>
+        <v-list  style="max-height:18em;overflow: scroll" three-line >
+          <template v-for="i in 6">
+            <v-card>
+              <v-list-tile avatar style="width:100%;" :class="'white'">
+                <!-- 头像，可不用 -->
+                <v-list-tile-avatar >
+                  <img v-bind:src="'/static/head.png'"/>
+                </v-list-tile-avatar>
 
-              <v-list-tile-content :class="'grey--text text--darken-4'">
-                <v-list-tile-title v-html="'<p>某位游客</p>'" />
-              </v-list-tile-content>
+                <v-list-tile-content :class="'grey--text text--darken-4'">
+                  <v-list-tile-title v-html="'<p>某位游客</p>'" />
+                </v-list-tile-content>
 
-              <v-list-tile-action>
-                <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
-              </v-list-tile-action>
-            </v-list-tile>
+                <v-list-tile-action>
+                  <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
+                </v-list-tile-action>
+              </v-list-tile>
 
-              <v-card-text style="padding-top:0px;padding-bottom:0px;">
-                <v-card-row style="">
-                  <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
-                </v-card-row>
-              </v-card-text>
-          </v-card>
-        </template>
-      </v-list>
+                <v-card-text style="padding-top:0px;padding-bottom:0px;">
+                  <v-card-row style="">
+                    <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
+                  </v-card-row>
+                </v-card-text>
+            </v-card>
+          </template>
+        </v-list>
 
 
-      <v-card-text>
-        <v-list-tile-avatar style="justify-content: flex-start;">
-          <img v-bind:src="'/static/head.png'" />
-        </v-list-tile-avatar>
+        <v-card-text>
+          <v-list-tile-avatar style="justify-content: flex-start;">
+            <img v-bind:src="'/static/head.png'" />
+          </v-list-tile-avatar>
 
-        <v-text-field style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是评论区呀" >
-        </v-text-field>
-        
-      </v-card-text>
+          <v-text-field v-model="commentContent" style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是支持markdown的评论区呀" >
+          </v-text-field>
 
-   </div>
+
+          <v-card-row style="padding:0 0;margin:0 0" actions :class="'white'">
+            <v-icon :class="'grey--text text--darken-2'">photo</v-icon>
+            <v-spacer></v-spacer>
+            <v-btn @click.native="publishComment" flat :class="'grey--text text--darken-2'">
+              发表
+            </v-btn>
+          </v-card-row>
+        </v-card-text>
+
+      </div>
 
     </transition>
 
-
+    <v-dialog  v-model="loginCardDisplay" > 
+      <login-card></login-card>
+    </v-dialog>
 
   </v-card>
 </template>
 <style>
 
+/* 评论区的展开动画 */
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
-
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -122,13 +140,24 @@
 
 </style>
 
+
 <script>
+
+  import LoginCard from '../Login'
+
   export default {
   data () {
     return {
-      showCommentValue: false
+      showCommentValue: false,
+      commentContent: '',
+      loginCardDisplay: false,
+      asdDsa: false
       }
     },
+    components: {
+      'login-card': LoginCard
+    },
+
     name: 'PostCard',
     props: {
       item: {
@@ -137,12 +166,25 @@
       }
     },
     methods:{
-      showComment(){
-        console.log('showComment')
+      publishComment(e){
+        e.stopPropagation() 
+       
+        let jwt = this.readCookie('jwt')
+        console.log('jwt is: ' +jwt)
+        if (jwt != '' && jwt != null) {
+          // TODO
+          console.log('已经登陆了')
+        }else{
+           this.loginCardDisplay = true
+        }
+
+
       },
       tagClicked(id, name){
         this.$emit('tagClicked', id, name)
       }
     }
   }
+
+
 </script>

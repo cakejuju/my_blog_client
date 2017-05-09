@@ -5,6 +5,7 @@ import Router from 'vue-router'
 
 import Home from '../views/Home'
 import About from '../views/About'
+import Login from '../views/Login'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: TLayout
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
 
     {

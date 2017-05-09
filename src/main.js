@@ -10,7 +10,29 @@ import Vuetify from 'vuetify'
 Vue.use(Vuetify)  // 使用 vuetify 作为组件库
 Vue.config.productionTip = false
 Vue.prototype.axios = axios  //用来发送ajax 
-window.tag_id = 'test'
+
+Vue.prototype.readCookie = function(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+} 
+
+// function readCookie(name) {
+//     var nameEQ = name + "=";
+//     var ca = document.cookie.split(';');
+//     for(var i=0;i < ca.length;i++) {
+//         var c = ca[i];
+//         while (c.charAt(0)==' ') c = c.substring(1,c.length);
+//         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+//     }
+//     return null;
+// }
+
 /* eslint-disable no-new */
 // 下方约定太多 所以可以不细看
 var MyPost = new Vue({
