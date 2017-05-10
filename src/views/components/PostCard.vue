@@ -116,8 +116,8 @@
 
     </transition>
 
-    <v-dialog  v-model="loginCardDisplay" > 
-      <login-card></login-card>
+    <v-dialog  v-model="loginCardDisplay" style="display: flexs" width="600"> 
+      <login-card @loggedIn="LoggedIn"></login-card>
     </v-dialog>
 
   </v-card>
@@ -166,18 +166,20 @@
       }
     },
     methods:{
+      LoggedIn(){
+        this.loginCardDisplay = false
+        console.log('login')
+      },
       publishComment(e){
-        e.stopPropagation() 
-       
         let jwt = this.readCookie('jwt')
-        console.log('jwt is: ' +jwt)
+
         if (jwt != '' && jwt != null) {
           // TODO
           console.log('已经登陆了')
         }else{
-           this.loginCardDisplay = true
+          e.stopPropagation() 
+          this.loginCardDisplay = true
         }
-
 
       },
       tagClicked(id, name){
