@@ -51,7 +51,6 @@ export default {
           } 
 
           this.items = posts
-          console.log(this.items)
           // 渲染
           // 当文章内容很多时,就用最大的height,这时height会相等 
           // 当文章内容小于最大的height时,则按文章的所有内容加载

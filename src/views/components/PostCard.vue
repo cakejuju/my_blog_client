@@ -54,9 +54,6 @@
         <v-icon >plus_one</v-icon>
       </v-btn>
 
-
-        
-
       <v-spacer></v-spacer>
       <v-btn @click.native="showCommentValue = !showCommentValue" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
         <v-icon >comment</v-icon>
@@ -96,7 +93,7 @@
 
         <v-card-text>
           <v-list-tile-avatar style="justify-content: flex-start;">
-            <img v-bind:src="'/static/head.png'" />
+            <img v-bind:src="Object.keys($store.state.currentMember).length === 0 ? '/static/head.png' : $store.state.currentMember.head_img_url"/>
           </v-list-tile-avatar>
 
           <v-text-field v-model="commentContent" style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是支持markdown的评论区呀" >
@@ -142,7 +139,6 @@
 
 
 <script>
-
   import LoginCard from '../Login'
 
   export default {

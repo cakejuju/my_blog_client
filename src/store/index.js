@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import * as actions from './actions'
-// import * as getters from './getters'
-// import cart from './modules/cart'
-// import products from './modules/products'
-// import createLogger from '../../../src/plugins/logger'
 
 Vue.use(Vuex)
 
@@ -13,12 +8,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    count: 1
+    currentMember: {}
   },
   mutations: {
-    increment (state) {
+    setMember (state, payload) {
       // 变更状态
-      state.count++
+      state.currentMember = payload  
     }
   }
 })

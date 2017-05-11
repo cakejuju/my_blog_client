@@ -36,7 +36,7 @@
 
 
 
-console.log(localStorage)
+// console.log(localStorage)
 var marked = require('marked'); // 引入marked (markdown to html)
 
 import PostCard from '../components/PostCard'

@@ -32,9 +32,8 @@
               </v-list-item>
             </v-list>
           </v-menu>
-
-
         </v-toolbar>
+
         <v-card-text>
           <v-container fluid>
             <v-row row>
@@ -108,7 +107,18 @@
             let res = response.data
             if (res.success === 1) {
               this.createCookie('jwt',res.jwt, 0.007)
-              this.$emit('loggedIn')
+
+              this.$store.commit('setMember', res.current_member)
+
+              // 如果是在 login 页面则跳转
+              // 若是组件引用则只回传已登录
+              if (this.$router.app._route.path === '/login') {
+                this.$router.push('/tou/posts')
+              }else{
+                this.$emit('loggedIn')
+              }
+
+
 
             }else if(res.success === 0){
               this.toastDisplay = true
