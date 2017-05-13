@@ -1,5 +1,19 @@
 <template>
   <v-card id="post-card" >
+
+    <v-snackbar 
+      :timeout="toastTimeout"
+      :right="true"
+      :bottom="true"
+      v-model="toastDisplay"
+      :class="toastClass">
+      {{toastContent}}
+
+      <v-btn icon="icon" :class="'white--text'" @click.native="toastDisplay = false">
+        <v-icon >close</v-icon>
+      </v-btn>
+    </v-snackbar>
+
     <!-- 头部 -->
     <v-card-row >
 
@@ -55,7 +69,7 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-      <v-btn @click.native="showCommentValue = !showCommentValue" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
+      <v-btn @click.native="showCommnets()" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
         <v-icon >comment</v-icon>
       </v-btn>
     </v-card-row>
@@ -64,7 +78,7 @@
     <transition name="slide-fade">
       <div v-if="showCommentValue">
         <v-list  style="max-height:18em;overflow: scroll" three-line >
-          <template v-for="i in 6">
+          <template v-for="comment in comments">
             <v-card>
               <v-list-tile avatar style="width:100%;" :class="'white'">
                 <!-- 头像，可不用 -->
@@ -73,17 +87,17 @@
                 </v-list-tile-avatar>
 
                 <v-list-tile-content :class="'grey--text text--darken-4'">
-                  <v-list-tile-title v-html="'<p>某位游客</p>'" />
+                  <v-list-tile-title v-html="comment.nickname" />
                 </v-list-tile-content>
 
                 <v-list-tile-action>
-                  <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">5小时</p>
+                  <p style="font-weight: 300; font-size:15px" :class="'grey--text text--darken-4'">{{comment.written_time}}</p>
                 </v-list-tile-action>
               </v-list-tile>
 
                 <v-card-text style="padding-top:0px;padding-bottom:0px;">
                   <v-card-row style="">
-                    <div style="" v-html="'<p>好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢好长呀这句话弄得我都要滚动了呢 </p>'" ></div>
+                    <div style="" v-html="toHtml(comment.content)" ></div>
                   </v-card-row>
                 </v-card-text>
             </v-card>
@@ -140,14 +154,18 @@
 
 <script>
   import LoginCard from '../Login'
-
+  var marked = require('marked'); // 引入marked (markdown to html)
   export default {
   data () {
     return {
       showCommentValue: false,
       commentContent: '',
       loginCardDisplay: false,
-      asdDsa: false
+      comments: [],
+      toastTimeout: 4000,
+      toastDisplay: false,
+      toastContent: '',
+      toastClass: ''
       }
     },
     components: {
@@ -162,16 +180,63 @@
       }
     },
     methods:{
+      toHtml(str){
+        return marked(str)
+      },
+      showCommnets(){
+        this.showCommentValue = !this.showCommentValue
+
+        if (this.showCommentValue === true && this.comments.length === 0) {
+          let order_params = {sort_by: 'created_at', order: 'ASC'}
+          let query_params = {post_id: this.item.id}
+          let params = {limit:          50, 
+                        current_page:   1,
+                        order_params:   order_params,
+                        include_model: 'member',
+                        query_params: query_params}
+              
+          this.axios.post('/api/comments/getData', params)    
+            .then((response) => {   
+              let res = response.data
+              if (res.success == 1) {
+                this.comments = res.json_data
+              }else{
+
+              }
+          })     
+        }
+
+      },
       LoggedIn(){
         this.loginCardDisplay = false
-        console.log('login')
       },
       publishComment(e){
         let jwt = this.readCookie('jwt')
-
+        // 登陆后 post 请求创建 comment
         if (jwt != '' && jwt != null) {
-          // TODO
-          console.log('已经登陆了')
+
+          let params = {content: this.commentContent, 
+                        destination: 'post',
+                        post_id: this.item.id}
+
+          this.axios.post('/api/comments/operate/create', params)    
+            .then((response) => {   
+              let res = response.data
+              if (res.success == 1) {
+                this.comments.push(res.comment)
+
+                this.toastDisplay = true
+                this.toastContent = res.msg
+                this.commentContent = ''
+                this.toastClass = 'grey darken-3'
+              }else{
+                this.toastDisplay = true
+                this.toastContent = res.msg
+                this.commentContent = ''
+                this.toastClass = 'orange darken-2'
+              }
+          })
+
         }else{
           e.stopPropagation() 
           this.loginCardDisplay = true

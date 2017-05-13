@@ -94,10 +94,6 @@
     },
     name: 'LoginCard',
     props: {
-      // item: {
-      //   type: Object,
-      //   required: true
-      // }
     },
     methods:{
       loginPost(){
@@ -106,10 +102,9 @@
           .then((response) => {   
             let res = response.data
             if (res.success === 1) {
-              this.createCookie('jwt',res.jwt, 0.007)
+              this.createCookie('jwt',res.jwt, 0.001)
 
               this.$store.commit('setMember', res.current_member)
-
               // 如果是在 login 页面则跳转
               // 若是组件引用则只回传已登录
               if (this.$router.app._route.path === '/login') {
@@ -117,8 +112,6 @@
               }else{
                 this.$emit('loggedIn')
               }
-
-
 
             }else if(res.success === 0){
               this.toastDisplay = true

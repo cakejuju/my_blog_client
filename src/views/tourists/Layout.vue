@@ -4,6 +4,11 @@
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
       <v-toolbar-title class="hidden-sm-and-down">My Blog</v-toolbar-title>
       <v-text-field prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
+      <!-- <v-icon x-large class="grey--text text--darken-2">view_week</v-icon> -->
+      <v-list-tile-avatar v-if="$store.state.currentMember.logged">
+        <img v-bind:src="'/static/head.png'"/>
+      </v-list-tile-avatar>
+
     </v-toolbar>
     <main>
       <v-sidebar class="grey lighten-2" left fixed v-model="sidebar" height="100%">
@@ -57,7 +62,27 @@ export default {
     }
   },
   mounted: function () {
+    // the store of vuex will be empty after page refresh 
+    // 若在 vuex 中 currentMember logged 部位 true 
+    // 说明页面被刚重定向过
+    if (this.$store.state.currentMember.logged) {
+      let jwt = this.readCookie('jwt')
+      // 判断 cookie 中的 jwt 
+      // 若有 则说明已经登陆过但刷新了页面 (单页不用刷新的呀) 
+      // 重新获得用户信息并 store
+      if (jwt != '' && jwt != null) {
+        this.axios.post('/api/member/currentMember', {})    
+          .then((response) => {   
+            let res = response.data
+            if (res.success === 1) {
+              this.$store.commit('setMember', res.current_member)
+            }  
+        }) 
 
+
+      }
+    }
+    
   }
 }
 </script>

@@ -13,6 +13,7 @@ export default new Vuex.Store({
   mutations: {
     setMember (state, payload) {
       // 变更状态
+      payload.logged = true
       state.currentMember = payload  
     }
   }
