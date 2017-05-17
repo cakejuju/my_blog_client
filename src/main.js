@@ -2,6 +2,31 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 // 这个文件基本可以不改
 import Vue from 'vue'
+
+import {
+    Popover,
+    Button
+} from 'element-ui';
+
+Vue.use(Popover)
+Vue.use(Button)
+// const components = [
+//     Popover,
+//     Button
+// ];
+
+// components.forEach((item) => {
+//     Vue.component(item.name, item);
+// });
+
+
+// Vue.prototype.$popover = Popover
+// Vue.prototype.$botton = Button
+
+// import Element from 'element-ui'
+
+// Vue.use(Element)
+
 import axios from 'axios'     // send ajax
 import App from './App'       // 因为有vue loader 所以能自动加载App.vue的文件
 

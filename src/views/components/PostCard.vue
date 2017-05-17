@@ -15,8 +15,7 @@
     </v-snackbar>
 
     <!-- 头部 -->
-    <v-card-row >
-
+    <v-card-row>
       <v-list-tile avatar style="width:100%" :class="item.title_color != null ? item.title_color : 'white'">
         <!-- 头像，可不用 -->
 <!--         <v-list-tile-avatar>
@@ -51,7 +50,6 @@
           <div v-html="item.l_content" ></div>
         </div>
       </v-card-row>
-
     </v-card-text>
 
 
@@ -62,8 +60,6 @@
     <!-- 底部 -->
 
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
-
-
       <v-btn icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
         <v-icon >plus_one</v-icon>
       </v-btn>
@@ -77,7 +73,7 @@
 
     <transition name="slide-fade">
       <div v-if="showCommentValue">
-        <v-list  style="max-height:18em;overflow: scroll" three-line >
+        <v-list  id="scroll_list" style="max-height:18em;overflow: scroll" three-line >
           <template v-for="comment in comments">
             <v-card>
               <v-list-tile avatar style="width:100%;" :class="'white'">
@@ -107,7 +103,7 @@
 
         <v-card-text>
           <v-list-tile-avatar style="justify-content: flex-start;">
-            <img v-bind:src="Object.keys($store.state.currentMember).length === 0 ? '/static/head.png' : $store.state.currentMember.head_img_url"/>
+            <img v-bind:src="$store.state.currentMember.logged ? '/static/head.png' : $store.state.currentMember.head_img_url"/>
           </v-list-tile-avatar>
 
           <v-text-field v-model="commentContent" style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是支持markdown的评论区呀" >
@@ -122,14 +118,15 @@
             </v-btn>
           </v-card-row>
         </v-card-text>
-
       </div>
 
     </transition>
 
-    <v-dialog  v-model="loginCardDisplay" style="display: flexs" width="600"> 
+
+    <v-dialog  v-model="loginCardDisplay" > 
       <login-card @loggedIn="LoggedIn"></login-card>
     </v-dialog>
+
 
   </v-card>
 </template>
@@ -147,6 +144,11 @@
 .slide-fade-enter, .slide-fade-leave-active {
   transform: translateY(-50px);
   opacity: 0;
+}
+
+.dialog__container {
+    display: block;
+    vertical-align: middle;
 }
 
 </style>
@@ -229,6 +231,13 @@
                 this.toastContent = res.msg
                 this.commentContent = ''
                 this.toastClass = 'grey darken-3'
+
+                // 获取 dom 刷新的事件
+                this.$nextTick(function() {
+                  let objDiv = document.getElementById("scroll_list");
+                  objDiv.scrollTop = objDiv.scrollHeight
+                })
+
               }else{
                 this.toastDisplay = true
                 this.toastContent = res.msg

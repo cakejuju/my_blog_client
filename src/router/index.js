@@ -7,6 +7,7 @@ import store from '../store'
 import Home from '../views/Home'
 import About from '../views/About'
 import Login from '../views/Login'
+import AdminLogin from '../views/admin/Login'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
@@ -37,9 +38,9 @@ export default new Router({
       component: TLayout
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
+      path: '/admin/login',
+      name: 'AdminLogin',
+      component: AdminLogin,
       beforeEnter: (to, from, next) => {
         // 判断是否已经登陆
         if (this.a.readCookie('jwt') === null) {
@@ -68,10 +69,3 @@ export default new Router({
 })
 
 
-function guardRoute (route, redirect, next) {
-  if (window.confirm(`Navigate to ${route.path}?`)) {
-    next()
-  } else if (window.confirm(`Redirect to home?`)) {
-    // redirect('/')
-  }
-}

@@ -5,9 +5,51 @@
       <v-toolbar-title class="hidden-sm-and-down">My Blog</v-toolbar-title>
       <v-text-field prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
       <!-- <v-icon x-large class="grey--text text--darken-2">view_week</v-icon> -->
-      <v-list-tile-avatar v-if="$store.state.currentMember.logged">
+<!--       <v-list-tile-avatar v-if="$store.state.currentMember.logged">
         <img v-bind:src="'/static/head.png'"/>
-      </v-list-tile-avatar>
+      </v-list-tile-avatar> -->
+
+
+
+      <v-chip v-if="!$store.state.currentMember.logged" @click.native="login"  label class="primary white--text" >登陆</v-chip>
+      
+      <el-popover
+        ref="logout"
+        placement="bottom"
+        width="350"
+        trigger="click"
+        >
+        <v-card class="grey--text text--darken-2">
+
+          <v-list three-line>
+            <template>
+              <v-list-item>
+                <v-list-tile avatar>
+                  <v-list-tile-avatar>
+                    <img v-bind:src="$store.state.currentMember.head_img_url"/>
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="$store.state.currentMember.nickname"/>
+                    <v-list-tile-sub-title v-html="$store.state.currentMember.email"/>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list-item>
+               <v-divider/>
+
+              <v-list-tile-content>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-chip @click.native=""  label class="grey--text text--dark-4" >登出</v-chip>
+              </v-list-tile-action>
+
+            </template>
+          </v-list>
+        </v-card>
+      </el-popover>
+
+      <button v-show="$store.state.currentMember.logged" v-popover:logout><img v-bind:src="'/static/head.png'" style="height: 42px;border-radius: 50%;"/></button>
+      <!-- <el-button v-show="$store.state.currentMember.logged" type="primary" v-popover:logout >登出</el-button> -->
+
 
     </v-toolbar>
     <main>
@@ -34,12 +76,26 @@
 <!--     <v-footer>
       <div class="text-xs4right">© 2017  Joey</div>
     </v-footer> -->
+    <v-dialog  v-model="loginCardDisplay" > 
+      <login-card @loggedIn="LoggedIn"></login-card>
+    </v-dialog>
 
   </v-app>
 </template>
 
-<script>
+<style scope>
+.el-popover {
+    padding: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
 
+</style>
+
+<script>
+import LoginCard from '../Login'
 
 export default {
 
@@ -51,21 +107,36 @@ export default {
               {title: '三列模式', avatar: 'face', divider: false, href: '/tou/posts/three_columns'},
               {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
               {title: '建设中...', avatar: 'build', divider: true, href: '/'}
-            ]
+            ],
+      loginCardDisplay: false
     }
   },
   components: {
+    'login-card': LoginCard
   },
   methods: {
     navigate(url){
       this.$router.push(url)
+    },
+    LoggedIn(){
+      this.loginCardDisplay = false
+    },
+    login(e){
+      console.log(this.$store.state.currentMember)
+      let jwt = this.readCookie('jwt')
+      // 登陆后 post 请求创建 comment
+      if (jwt === '' || jwt === null) {
+        e.stopPropagation() 
+        this.loginCardDisplay = true
+      }
+
     }
   },
   mounted: function () {
     // the store of vuex will be empty after page refresh 
     // 若在 vuex 中 currentMember logged 部位 true 
     // 说明页面被刚重定向过
-    if (this.$store.state.currentMember.logged) {
+    if (!this.$store.state.currentMember.logged) {
       let jwt = this.readCookie('jwt')
       // 判断 cookie 中的 jwt 
       // 若有 则说明已经登陆过但刷新了页面 (单页不用刷新的呀) 

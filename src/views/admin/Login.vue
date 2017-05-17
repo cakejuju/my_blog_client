@@ -1,5 +1,5 @@
 <template>
-  <div id="login-card" style="width:100%">
+  <div id="admin-login-card" style="width:100%">
       <v-card style="height:100%">
         <v-toolbar class="teal lighten-4">  
           <v-toolbar-title class="grey--text text--darken-2">登陆哟</v-toolbar-title>
@@ -39,18 +39,18 @@
             <v-row row>
               <v-col xs12>
                 <v-text-field
-                  label="输入邮箱"
-                  v-model="email"
+                  label="输入账号"
+                  v-model="username"
                 />
               </v-col>
-<!--               <v-col xs12>
+              <v-col xs12>
                 <v-text-field
                   label="输入密码"
                   append-icon="visibility_off"
                   type="password"
                   v-model="password"
                 />
-              </v-col> -->
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -84,7 +84,7 @@
   export default {
   data () {
     return {
-      email: '',
+      username: '',
       password: '',
       toastTimeout: 3000,
       toastDisplay: false,
@@ -97,16 +97,17 @@
     },
     methods:{
       loginPost(){
-        let params = {email: this.email}
-        this.axios.post('/api/login', params)    
+        let params = {username: this.username, password: this.password}
+        this.axios.post('/api/admin/login', params)    
           .then((response) => {   
             let res = response.data
             if (res.success === 1) {
               this.createCookie('jwt',res.jwt, 0.001)
+
               this.$store.commit('setMember', res.current_member)
               // 如果是在 login 页面则跳转
               // 若是组件引用则只回传已登录
-              if (this.$router.app._route.path === '/login') {
+              if (this.$router.app._route.path === '/admin/login') {
                 this.$router.push('/tou/posts')
               }else{
                 this.$emit('loggedIn')
