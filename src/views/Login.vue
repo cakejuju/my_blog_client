@@ -41,16 +41,10 @@
                 <v-text-field
                   label="输入邮箱"
                   v-model="email"
+                  v-bind:rules="[validEmail(email)]"
+                  required
                 />
               </v-col>
-<!--               <v-col xs12>
-                <v-text-field
-                  label="输入密码"
-                  append-icon="visibility_off"
-                  type="password"
-                  v-model="password"
-                />
-              </v-col> -->
             </v-row>
           </v-container>
         </v-card-text>
@@ -88,7 +82,9 @@
       password: '',
       toastTimeout: 3000,
       toastDisplay: false,
-      toastContent: ''
+      toastContent: '',
+      isLogin: true,
+      isRegister: false
 
       }
     },
@@ -97,6 +93,13 @@
     },
     methods:{
       loginPost(){
+        // 验证 email
+        let emailIsValid = this.validEmail(this.email)
+        if (!emailIsValid) {
+           this.toastDisplay = true
+           this.toastContent = '邮箱格式不对'
+           return
+        }
         let params = {email: this.email}
         this.axios.post('/api/login', params)    
           .then((response) => {   
@@ -118,6 +121,11 @@
             }
             
         }) 
+      },
+      validEmail(email){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        return re.test(email);
       },
       thirdPartLogin(){
         console.log('thirdPartLogin')

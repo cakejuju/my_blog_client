@@ -79,7 +79,7 @@
               <v-list-tile avatar style="width:100%;" :class="'white'">
                 <!-- 头像，可不用 -->
                 <v-list-tile-avatar >
-                  <img v-bind:src="'/static/head.png'"/>
+                  <img v-bind:src="comment.head_img_url"/>
                 </v-list-tile-avatar>
 
                 <v-list-tile-content :class="'grey--text text--darken-4'">
@@ -103,7 +103,7 @@
 
         <v-card-text>
           <v-list-tile-avatar style="justify-content: flex-start;">
-            <img v-bind:src="$store.state.currentMember.logged ? '/static/head.png' : $store.state.currentMember.head_img_url"/>
+            <img v-bind:src="$store.state.currentMember.head_img_url"/>
           </v-list-tile-avatar>
 
           <v-text-field v-model="commentContent" style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是支持markdown的评论区呀" >

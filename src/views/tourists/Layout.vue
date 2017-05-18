@@ -4,23 +4,11 @@
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
       <v-toolbar-title class="hidden-sm-and-down">My Blog</v-toolbar-title>
       <v-text-field prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
-      <!-- <v-icon x-large class="grey--text text--darken-2">view_week</v-icon> -->
-<!--       <v-list-tile-avatar v-if="$store.state.currentMember.logged">
-        <img v-bind:src="'/static/head.png'"/>
-      </v-list-tile-avatar> -->
 
-
-
+      <!-- 登陆以及登出 -->
       <v-chip v-if="!$store.state.currentMember.logged" @click.native="login"  label class="primary white--text" >登陆</v-chip>
-      
-      <el-popover
-        ref="logout"
-        placement="bottom"
-        width="350"
-        trigger="click"
-        >
-        <v-card class="grey--text text--darken-2">
-
+      <el-popover ref="logout" placement="bottom" width="350" trigger="click" >
+        <v-card class="grey--text text--darken-2" v-show="$store.state.currentMember.logged">
           <v-list three-line>
             <template>
               <v-list-item>
@@ -35,24 +23,23 @@
                 </v-list-tile>
               </v-list-item>
                <v-divider/>
-
               <v-list-tile-content>
               </v-list-tile-content>
               <v-list-tile-action>
-                <v-chip @click.native=""  label class="grey--text text--dark-4" >登出</v-chip>
+                <v-chip @click.native="logout()"  label class="grey--text text--dark-4" >登出</v-chip>
               </v-list-tile-action>
-
             </template>
           </v-list>
         </v-card>
       </el-popover>
 
-      <button v-show="$store.state.currentMember.logged" v-popover:logout><img v-bind:src="'/static/head.png'" style="height: 42px;border-radius: 50%;"/></button>
-      <!-- <el-button v-show="$store.state.currentMember.logged" type="primary" v-popover:logout >登出</el-button> -->
-
-
+      <button v-show="$store.state.currentMember.logged" v-popover:logout>
+        <img v-bind:src="$store.state.currentMember.head_img_url" style="height: 42px;width: 42px;border-radius: 50%;"/>
+      </button>
     </v-toolbar>
+    
     <main>
+      <!-- 侧边栏 -->
       <v-sidebar class="grey lighten-2" left fixed v-model="sidebar" height="100%">
         <v-list dense>
           <v-list-item v-for="(item,i) in items" :key="item.title">
@@ -73,13 +60,14 @@
       <router-view style="margin-top:80px;width:100%" ></router-view>
     </main>
 
-<!--     <v-footer>
-      <div class="text-xs4right">© 2017  Joey</div>
-    </v-footer> -->
+    <!-- login dialog -->
     <v-dialog  v-model="loginCardDisplay" > 
       <login-card @loggedIn="LoggedIn"></login-card>
     </v-dialog>
 
+<!--     <v-footer>
+      <div class="text-xs4right">© 2017  Joey</div>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -122,14 +110,17 @@ export default {
       this.loginCardDisplay = false
     },
     login(e){
-      console.log(this.$store.state.currentMember)
       let jwt = this.readCookie('jwt')
       // 登陆后 post 请求创建 comment
       if (jwt === '' || jwt === null) {
         e.stopPropagation() 
         this.loginCardDisplay = true
       }
-
+    },
+    logout(){
+      console.log('等出了')
+      this.createCookie('jwt','', 0.0001)
+      this.$store.commit('flushMember')
     }
   },
   mounted: function () {

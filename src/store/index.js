@@ -15,6 +15,8 @@ export default new Vuex.Store({
       // 变更状态
       payload.logged = true
       state.currentMember = payload  
+    },flushMember(state){
+      state.currentMember = {}
     }
   }
 })
