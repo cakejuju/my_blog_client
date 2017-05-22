@@ -62,9 +62,15 @@
 
     <!-- login dialog -->
 
+<!-- 
+    <el-dialog size="small" modal="false" modal-append-to-body="false" v-model="loginCardDisplay">
+      <login-card @loggedIn="LoggedIn"></login-card>
+    </el-dialog> -->
 
     <v-dialog  v-model="loginCardDisplay" scrollable> 
-      <login-card @loggedIn="LoggedIn"></login-card>
+
+      <login-card  @loggedIn="LoggedIn"></login-card>
+
     </v-dialog>
 
 

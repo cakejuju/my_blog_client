@@ -6,11 +6,13 @@ import Vue from 'vue'
 import {
     Popover,
     Button,
-    Upload
+    Upload,
+    Dialog
 } from 'element-ui';
 Vue.use(Popover)
 Vue.use(Button)
 Vue.use(Upload)
+Vue.use(Dialog)
 
 import axios from 'axios'     // send ajax
 import App from './App'       // 因为有vue loader 所以能自动加载App.vue的文件

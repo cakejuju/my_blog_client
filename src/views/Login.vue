@@ -60,9 +60,10 @@
         <v-toolbar class="green lighten-4">  
           <v-toolbar-title class="grey--text text--darken-2">注册本站</v-toolbar-title>
           <v-spacer></v-spacer>
+          <!-- <v-btn class="grey--text text--darken-2" @click.native="goBackLogin">返回登录</v-btn> -->
         </v-toolbar>
 
-        <v-card-text>
+        <v-card-text style="padding-bottom:0px;margin-bottom:0px">
           <v-container fluid>
             <v-row row>
 
@@ -75,6 +76,7 @@
               :before-upload="beforeAvatarUpload">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <div class="el-upload__tip" slot="tip">上传头像,只支持jpg/png文件，且不超过2M</div>
             </el-upload>
 
               <v-col xs12>
@@ -97,10 +99,10 @@
         </v-card-text>
 
         <v-card-row actions class="white">
-          <v-btn class="grey--text text--darken-2" @click.native="goBackLogin">返回登录</v-btn>
+          <v-btn flat class="grey--text text--darken-2" @click.native="goBackLogin">返回登录</v-btn>
 
           <v-spacer></v-spacer>
-          <v-btn @click.native="" flat class="grey--text text--darken-2">确认</v-btn>
+          <v-btn @click.native="" flat class="grey--text text--darken-2">提交注册</v-btn>
         </v-card-row>
       </v-card>
 
