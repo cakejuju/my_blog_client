@@ -146,10 +146,7 @@
   opacity: 0;
 }
 
-.dialog__container {
-    display: block;
-    vertical-align: middle;
-}
+
 
 </style>
 

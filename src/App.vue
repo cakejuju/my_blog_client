@@ -23,7 +23,7 @@ export default {
   margin-top: 60px;*/
 }
 
-/*body {
-  background: #dddddb
-}*/
+body {
+  /*background:  #eee0e0*/
+}
 </style>

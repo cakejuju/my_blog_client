@@ -61,9 +61,12 @@
     </main>
 
     <!-- login dialog -->
-    <v-dialog  v-model="loginCardDisplay" > 
+
+
+    <v-dialog  v-model="loginCardDisplay" scrollable> 
       <login-card @loggedIn="LoggedIn"></login-card>
     </v-dialog>
+
 
 <!--     <v-footer>
       <div class="text-xs4right">© 2017  Joey</div>

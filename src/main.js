@@ -5,27 +5,12 @@ import Vue from 'vue'
 
 import {
     Popover,
-    Button
+    Button,
+    Upload
 } from 'element-ui';
-
 Vue.use(Popover)
 Vue.use(Button)
-// const components = [
-//     Popover,
-//     Button
-// ];
-
-// components.forEach((item) => {
-//     Vue.component(item.name, item);
-// });
-
-
-// Vue.prototype.$popover = Popover
-// Vue.prototype.$botton = Button
-
-// import Element from 'element-ui'
-
-// Vue.use(Element)
+Vue.use(Upload)
 
 import axios from 'axios'     // send ajax
 import App from './App'       // 因为有vue loader 所以能自动加载App.vue的文件
@@ -36,8 +21,11 @@ import store from './store'   // support of 状态管理
 import router from './router' // 先找到 router 文件夹, 若其中有index.js文件,会自动引入
 import Vuetify from 'vuetify' // 组件库
 
-
 import './assets/vue_strengthen' // 挂载在 vue 的所有方法
+
+// css import 顺序不可变化
+import './assets/stylesheets/icons.css' // vuetify icons
+import './assets/stylesheets/vuetify.min.css' // vuetify css
 
 
 Vue.use(Vuex)

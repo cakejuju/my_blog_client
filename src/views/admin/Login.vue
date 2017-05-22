@@ -1,6 +1,6 @@
 <template>
   <div id="admin-login-card" style="width:100%">
-      <v-card style="height:100%" v-if="isLogin">
+      <v-card style="height:100%">
         <v-toolbar class="teal lighten-4">  
           <v-toolbar-title class="grey--text text--darken-2">登陆哟</v-toolbar-title>
           <v-spacer></v-spacer>
