@@ -68,9 +68,7 @@
     </el-dialog> -->
 
     <v-dialog  v-model="loginCardDisplay" scrollable> 
-
       <login-card  @loggedIn="LoggedIn"></login-card>
-
     </v-dialog>
 
 
@@ -147,6 +145,7 @@ export default {
             let res = response.data
             if (res.success === 1) {
               this.$store.commit('setMember', res.current_member)
+              console.log(res.current_member)
             }  
         }) 
 

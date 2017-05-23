@@ -30,6 +30,8 @@ import './assets/stylesheets/icons.css' // vuetify icons
 import './assets/stylesheets/vuetify.min.css' // vuetify css
 
 
+// import './assets/stylesheets/element-ui.index.css' // element-ui
+
 Vue.use(Vuex)
 Vue.use(Vuetify)  // 使用 vuetify 作为组件库
 

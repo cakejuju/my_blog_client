@@ -11,12 +11,16 @@ body {
   background:  #e0e0e0
 }
 
-.avatar {
-    width: 54px;
-}
-
+.list__tile__avatar {
+     width: 54px;
+ }
 /* dialog 控件在不显示的时候就啥也不显示*/
 .dialog__container {
     display: block;
     vertical-align: middle;
+    margin: 0 auto; 
+}
+
+.dialog.dialog--active.dialog--scrollable{
+  margin: 130px auto;
 }

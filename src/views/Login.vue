@@ -1,5 +1,8 @@
 <template>
   <div id="login-card" style="width:100%">
+      <div class="full-cover" v-if="loginCardLoadingDisplay">
+<!--         <v-progress-circular style="width:50%;" indeterminate v-bind:size="70" v-bind:width="7" class="purple--text"></v-progress-circular> -->
+      </div>
       <v-card style="height:100%"  v-if="isLogin">
         <v-toolbar class="teal lighten-4">  
           <v-toolbar-title class="grey--text text--darken-2">登陆哟</v-toolbar-title>
@@ -65,32 +68,33 @@
 
         <v-card-text style="padding-bottom:0px;margin-bottom:0px">
           <v-container fluid>
-            <v-row row>
-
-              <el-upload
+            <v-row >
+            <v-col xs1></v-col>
+            <v-col xs10>
+            <el-upload
               class="avatar-uploader"
-              action="//127.0.0.1:9292/pic"
+              action="//192.168.31.20:9292/upload/head_img"
               :show-file-list="false"
               :on-success="handleAvatarScucess"
               :on-error="handleAvatarError"
               :before-upload="beforeAvatarUpload">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              <div class="el-upload__tip" slot="tip">上传头像,只支持jpg/png文件，且不超过2M</div>
+              <div class="el-upload__tip" slot="tip">上传头像,支持jpg/png文件</div>
             </el-upload>
-
+            </v-col>
               <v-col xs12>
                 <v-text-field
                   label="填入邮箱"
-                  v-model="email"
-                  v-bind:rules="[validEmail(email)]"
+                  v-model="reEmail"
+                  v-bind:rules="[validEmail(reEmail)]"
                   required
                 />
               </v-col>
               <v-col xs12>
                 <v-text-field
                   label="你的昵称"
-                  v-model="nickname"
+                  v-model="reNickname"
                   required
                 />
               </v-col>
@@ -102,7 +106,7 @@
           <v-btn flat class="grey--text text--darken-2" @click.native="goBackLogin">返回登录</v-btn>
 
           <v-spacer></v-spacer>
-          <v-btn @click.native="" flat class="grey--text text--darken-2">提交注册</v-btn>
+          <v-btn @click.native="doRegister()" flat class="grey--text text--darken-2">提交注册</v-btn>
         </v-card-row>
       </v-card>
 
@@ -136,16 +140,29 @@
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 150px;
+    height: 150px;
     display: block;
   }
+
+.full-cover{
+    z-index: 100;
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,0.5);
+}
+
 </style>
 
 <script>
@@ -155,15 +172,20 @@
       // 登陆注册输入
       email: '',
       password: '',
-      nickname: '',
+
+      reNickname: '', // 注册昵称
+      reEmail: '', // 注册邮箱
+
 
       toastTimeout: 3000,
       toastDisplay: false,
       toastContent: '',
       isLogin: true,
       isRegister: false,
+      loginCardLoadingDisplay: false,
 
-      imageUrl: ''
+      imageUrl: '',
+      file_path: ''  // 图片暂存的地址
 
       }
     },
@@ -171,29 +193,84 @@
     props: {
     },
     methods:{
-      handleAvatarError(){
+      doRegister(){
+        // 只验证邮箱和昵称
+        let reEmail = this.reEmail
+        let reNickname = this.reNickname
+        let emailIsValid = this.validEmail(reEmail)
+        if (!emailIsValid) {
+           this.toastDisplay = true
+           this.toastContent = '邮箱格式不对'
+           return
+        }
+
+        if (reNickname === '' || reNickname === null) {
+           this.toastDisplay = true
+           this.toastContent = '昵称难道是空字符串?'
+           return   
+        }
+        let params = {email: reEmail, nickname: reNickname, tempfile_path: this.file_path}
+
+        this.loginCardLoadingDisplay = true
+        this.axios.post('/api/member/register', params)    
+        .then((response) => {   
+          this.loginCardLoadingDisplay = false
+          let res = response.data
+          if (res.success === 1) {
+            this.createCookie('jwt',res.jwt, 0.001)
+            this.$store.commit('setMember', res.current_member)
+            // 如果是在 login 页面则跳转
+            // 若是组件引用则只回传已登录
+            if (this.$router.app._route.path === '/login') {
+              this.$router.push('/tou/posts')
+            }else{
+              this.$emit('loggedIn')
+              this.toastDisplay = true
+              this.toastContent = '注册成功并登陆,感谢对本站的支持(:'
+            }
+
+          }else if(res.success === 0){
+            this.toastDisplay = true
+            this.toastContent = res.msg
+          }
+        })
+
+      },
+
+      showRegisterCard(){
+        this.isLogin = false
+        this.isRegister = true
+      },
+      // 上传图片失败 显示 toast
+      handleAvatarError(err, file, fileList){
+        this.toastDisplay = true
+        this.toastContent = err
+        // console.log(err)
         return false
       },
+      // 上传图片成功 得到后端回传的暂存文件地址
+      // 显示图片
       handleAvatarScucess(res, file) {
-         console.log(res)
+        console.log(res)
+        this.file_path = res.file_path
+        
         this.imageUrl = URL.createObjectURL(file.raw);
-       
       },
+      // 图片上传前钩子 验证图片格式 大小
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        console.log(isLt2M)
-        if (!isJPG) {
-          // this.$message.error('上传头像图片只能是 JPG 格式!');
+        const isPNG = file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 10;
+
+        if (!isJPG && !isPNG) {
           this.toastDisplay = true
-          this.toastContent = '上传头像图片只能是 JPG 格式!'
+          this.toastContent = '上传头像图片只能是 JPG 或 PNG 格式!'
         }
         if (!isLt2M) {
           this.toastDisplay = true
-          this.toastContent = '上传头像图片大小不能超过 2MB!'
-          // this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.toastContent = '上传头像图片大小不能超过 10MB!'
         }
-        return isJPG && isLt2M;
+        return isJPG||isPNG && isLt2M;
       },
       loginPost(){
         // 验证 email
@@ -205,29 +282,25 @@
         }
         let params = {email: this.email}
         this.axios.post('/api/login', params)    
-          .then((response) => {   
-            let res = response.data
-            if (res.success === 1) {
-              this.createCookie('jwt',res.jwt, 0.001)
-              this.$store.commit('setMember', res.current_member)
-              // 如果是在 login 页面则跳转
-              // 若是组件引用则只回传已登录
-              if (this.$router.app._route.path === '/login') {
-                this.$router.push('/tou/posts')
-              }else{
-                this.$emit('loggedIn')
-              }
-
-            }else if(res.success === 0){
-              this.toastDisplay = true
-              this.toastContent = res.msg
+        .then((response) => {   
+          let res = response.data
+          if (res.success === 1) {
+            this.createCookie('jwt',res.jwt, 0.001)
+            this.$store.commit('setMember', res.current_member)
+            // 如果是在 login 页面则跳转
+            // 若是组件引用则只回传已登录
+            if (this.$router.app._route.path === '/login') {
+              this.$router.push('/tou/posts')
+            }else{
+              this.$emit('loggedIn')
             }
-            
+
+          }else if(res.success === 0){
+            this.toastDisplay = true
+            this.toastContent = res.msg
+          }
         }) 
-      },
-      showRegisterCard(){
-        this.isLogin = false
-        this.isRegister = true
+
       },
       goBackLogin(){
         this.isLogin = true
