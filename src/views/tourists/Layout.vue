@@ -67,8 +67,8 @@
       <login-card @loggedIn="LoggedIn"></login-card>
     </el-dialog> -->
 
-    <v-dialog  v-model="loginCardDisplay" scrollable> 
-      <login-card  @loggedIn="LoggedIn"></login-card>
+    <v-dialog  v-model="loginCardDisplay" > 
+      <login-card style="overflow: scroll" @loggedIn="LoggedIn"></login-card>
     </v-dialog>
 
 

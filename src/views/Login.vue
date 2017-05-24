@@ -1,8 +1,11 @@
 <template>
   <div id="login-card" style="width:100%">
+
       <div class="full-cover" v-if="loginCardLoadingDisplay">
-<!--         <v-progress-circular style="width:50%;" indeterminate v-bind:size="70" v-bind:width="7" class="purple--text"></v-progress-circular> -->
+          <v-progress-circular indeterminate v-bind:size="50" class="primary--text" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+          </v-progress-circular>
       </div>
+
       <v-card style="height:100%"  v-if="isLogin">
         <v-toolbar class="teal lighten-4">  
           <v-toolbar-title class="grey--text text--darken-2">登陆哟</v-toolbar-title>
@@ -69,8 +72,8 @@
         <v-card-text style="padding-bottom:0px;margin-bottom:0px">
           <v-container fluid>
             <v-row >
-            <v-col xs1></v-col>
-            <v-col xs10>
+            <v-col xs2 sm2 lg3 xl2></v-col>
+            <v-col xs9 sm9 lg9 xl9>
             <el-upload
               class="avatar-uploader"
               action="//192.168.31.20:9292/upload/head_img"
@@ -252,12 +255,14 @@
       // 显示图片
       handleAvatarScucess(res, file) {
         console.log(res)
+
         this.file_path = res.file_path
         
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       // 图片上传前钩子 验证图片格式 大小
       beforeAvatarUpload(file) {
+
         const isJPG = file.type === 'image/jpeg';
         const isPNG = file.type === 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 10;
