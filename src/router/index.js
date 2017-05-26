@@ -7,7 +7,9 @@ import store from '../store'
 import Home from '../views/Home'
 import About from '../views/About'
 import Login from '../views/Login'
-import AdminLogin from '../views/admin/Login'
+import ALogin from '../views/admin/Login'
+import APosts from '../views/admin/Posts'
+import ALayout from '../views/tourists/Layout'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
@@ -38,16 +40,29 @@ export default new Router({
       component: TLayout
     },
     {
+      path: '/admin/',
+      name: 'ALayout',
+      component: ALayout,
+      children: [{path: 'posts', 
+                  component: APosts, 
+                  name: 'AdminPosts', 
+                  meta: {title: '文章管理列表'}
+                 },
+          
+          
+          ]
+    },
+    {
       path: '/admin/login',
       name: 'AdminLogin',
-      component: AdminLogin,
+      component: ALogin,
       beforeEnter: (to, from, next) => {
         // 判断是否已经登陆
         if (this.a.readCookie('jwt') === null) {
           next()
         }else{
           // 已经登陆则跳转到首页
-          next('/tou/posts')
+          next('/admin/posts')
         }
 
       }

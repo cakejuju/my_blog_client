@@ -1,7 +1,6 @@
 <template>
 
   <div>
-    <!-- <h2 >{{windowWidth}}</h2> -->
     <!-- 小屏幕只显示一列 -->
     <div class="row" v-if="windowWidth < 1200">
       <v-col xs12 sm12 lg12 xl12 v-for="item in postsData.all" :key="item" style="margin:20px 0px;">

@@ -60,7 +60,7 @@
     <!-- 底部 -->
 
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
-      <v-btn icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
+      <v-btn icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'" style="z-index:0">
         <v-icon >plus_one</v-icon>
       </v-btn>
 
@@ -119,7 +119,6 @@
           </v-card-row>
         </v-card-text>
       </div>
-
     </transition>
 
 

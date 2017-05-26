@@ -13,8 +13,8 @@
             <template>
               <v-list-item>
                 <v-list-tile avatar>
-                  <v-list-tile-avatar>
-                    <img v-bind:src="$store.state.currentMember.head_img_url"/>
+                  <v-list-tile-avatar style="width: 120px;height: 120px;">
+                    <img style="width: 102px;height: 94px;margin-left:-10px" v-bind:src="$store.state.currentMember.head_img_url"/>
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title v-html="$store.state.currentMember.nickname"/>
@@ -60,15 +60,8 @@
       <router-view style="margin-top:80px;width:100%" ></router-view>
     </main>
 
-    <!-- login dialog -->
-
-<!-- 
-    <el-dialog size="small" modal="false" modal-append-to-body="false" v-model="loginCardDisplay">
-      <login-card @loggedIn="LoggedIn"></login-card>
-    </el-dialog> -->
-
     <v-dialog  v-model="loginCardDisplay" > 
-      <login-card style="overflow: scroll" @loggedIn="LoggedIn"></login-card>
+      <login-card  @loggedIn="LoggedIn"></login-card>
     </v-dialog>
 
 
@@ -98,11 +91,7 @@ export default {
   data () {
     return {
       sidebar: true,
-      items:[ {title: '首页', avatar: 'home', divider: false, href: '/tou/posts'},
-              {title: '三列模式', avatar: 'face', divider: false, href: '/tou/posts/three_columns'},
-              {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
-              {title: '建设中...', avatar: 'build', divider: true, href: '/'}
-            ],
+      items:[], // 在 mounted 函数中加载
       loginCardDisplay: false
     }
   },
@@ -131,6 +120,13 @@ export default {
     }
   },
   mounted: function () {
+    // 根据是否为管理者加载侧边栏
+    let items = [
+                {title: '首页', avatar: 'home', divider: false, href: '/tou/posts'},
+                 {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
+                 {title: '建设中...', avatar: 'build', divider: true, href: '/'}
+                  ]
+
     // the store of vuex will be empty after page refresh 
     // 若在 vuex 中 currentMember logged 部位 true 
     // 说明页面被刚重定向过
@@ -144,13 +140,22 @@ export default {
           .then((response) => {   
             let res = response.data
             if (res.success === 1) {
+              if (res.current_member.is_master) {
+                items.unshift({title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'})
+                this.items = items
+              }
               this.$store.commit('setMember', res.current_member)
-              console.log(res.current_member)
+              // console.log(res.current_member)
             }  
         }) 
 
 
       }
+    }else{
+      if (this.$store.state.currentMember.is_master) {
+        items.unshift({title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'})
+      }  
+      this.items = items
     }
     
   }
