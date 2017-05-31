@@ -7,9 +7,14 @@ import store from '../store'
 import Home from '../views/Home'
 import About from '../views/About'
 import Login from '../views/Login'
+
 import ALogin from '../views/admin/Login'
-import APosts from '../views/admin/Posts'
+import APosts from '../views/admin/posts/Index'
+import ANewPost from '../views/admin/posts/New'
+import AEditpost from '../views/admin/posts/Edit'
 import ALayout from '../views/tourists/Layout'
+import ACloudImages from '../views/admin/cloud_images/Index'
+
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
@@ -43,12 +48,10 @@ export default new Router({
       path: '/admin/',
       name: 'ALayout',
       component: ALayout,
-      children: [{path: 'posts', 
-                  component: APosts, 
-                  name: 'AdminPosts', 
-                  meta: {title: '文章管理列表'}
-                 },
-          
+      children: [{path: 'posts', component: APosts, name: 'AdminPosts', meta: {title: '文章管理列表'}},
+                 {path: 'posts/new', component: ANewPost, name: 'AdminNewPost', meta: {title: '新建博客'}},
+                 {path: 'posts/edit/:id', component: AEditpost, name: 'AdminEditPost', meta: {title: '编辑博客'}},
+                 {path: 'cloud_images', component: ACloudImages, name: 'ACloudImages', meta: {title: '云图片管理'}},
           
           ]
     },

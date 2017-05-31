@@ -1,12 +1,15 @@
 <template>
   <div id="post_picture" class="masonry">
-<!--     <v-card class="title-block item">
-      <v-card-title>
-        插图管理
-        <v-subheader v-text="`已用空间: ${(this.usage / 1024 / 1024).toFixed(3)}M`"></v-subheader>
+    <v-card class="title-block item" >
+      <v-card-row @click.native="$router.push('/admin/posts/new')">
+      <v-card-title >
+        新建博客
+        <!-- <v-subheader v-text="`发送到了分手大师多福多寿`"></v-subheader> -->
+
       </v-card-title>
+      </v-card-row>
     </v-card>
- -->
+
     <v-card class="item"v-for="post in posts" :key="post.ds">
       <v-card-title >
         <span style="font-size:17px;font-weight:500" class="grey--text text--darken-4">{{post.title}}</span>
@@ -53,7 +56,7 @@
     },
     methods: {
       getPosts(params){
-        this.axios.post('/api/get_posts', params)    
+        this.axios.post('/api/admin/get_posts', params)    
           .then((response) => {   
             let posts = response.data.json_data
             // console.log(posts)
@@ -83,7 +86,7 @@
     }
   }
 
-  @media all and (max-width: 960px) {
+  @media all and (max-width: 1111px) {
     .masonry {
       column-count: 2;
     }

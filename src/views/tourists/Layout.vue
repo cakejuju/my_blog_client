@@ -14,7 +14,7 @@
               <v-list-item>
                 <v-list-tile avatar>
                   <v-list-tile-avatar style="width: 120px;height: 120px;">
-                    <img style="width: 102px;height: 94px;margin-left:-10px" v-bind:src="$store.state.currentMember.head_img_url"/>
+                    <img style="width: 102px;height: 94px;margin-left:-10px;margin-right:10px" v-bind:src="$store.state.currentMember.head_img_url"/>
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title v-html="$store.state.currentMember.nickname"/>
@@ -80,6 +80,8 @@
     padding-left: 0px;
 }
 
+
+
 </style>
 
 <script>
@@ -92,7 +94,9 @@ export default {
     return {
       sidebar: true,
       items:[], // 在 mounted 函数中加载
-      loginCardDisplay: false
+      loginCardDisplay: false,
+      adminSideBar: [{title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'},
+                     {title: '云图片管理', avatar: 'photo_library', divider: false, href: '/admin/cloud_images'}]
     }
   },
   components: {
@@ -114,8 +118,7 @@ export default {
       }
     },
     logout(){
-      console.log('等出了')
-      this.createCookie('jwt','', 0.0001)
+      this.createCookie('jwt','', 0.00000001)
       this.$store.commit('flushMember')
     }
   },
@@ -141,25 +144,28 @@ export default {
             let res = response.data
             if (res.success === 1) {
               if (res.current_member.is_master) {
-                items.unshift({title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'})
+                let adminSideBar = this.adminSideBar
+                items = adminSideBar.concat(items);
                 this.items = items
               }
               this.$store.commit('setMember', res.current_member)
               // console.log(res.current_member)
             }  
         }) 
-
-
       }
     }else{
+
       if (this.$store.state.currentMember.is_master) {
-        items.unshift({title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'})
+          let adminSideBar = this.adminSideBar
+          items = adminSideBar.concat(items);
       }  
-      this.items = items
     }
-    
+
+    this.items = items  
   }
 }
+
+
 </script>
 
 
