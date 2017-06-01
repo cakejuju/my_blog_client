@@ -2,38 +2,43 @@
   <div id="post_picture" class="masonry">
     <v-card class="title-block item" >
       <v-card-row >
-      <v-card-title >
-        云服务:{{file_url}}
-      </v-card-title>
+        <v-card-title >
+          <!-- 云服务:{{file_url}} -->
+          <v-text-field  label="输入地址" v-model="file_url"></v-text-field>
+        </v-card-title>
       </v-card-row>
     </v-card>
 
     <v-card class="item"v-for="file in files" :key="file.ds">
 
       <v-card-title >
-        <span style="font-size:17px;font-weight:500" class="grey--text text--darken-4">
+        <span  style="font-size:17px;font-weight:500" class="grey--text text--darken-4">
         {{new Date(file.last_modified * 1000).yyyymmdd()}}
         </span>
         <v-spacer></v-spacer>
-        <span style="font-size:17px;" class="grey--text text--darken-4">{{Math.round(file.length/1024)}}K</span>
+        <span v-if="file.type == 'file'" style="font-size:17px;" class="grey--text text--darken-4">{{Math.round(file.length/1024)}}K</span>
+
+        <v-btn @click.native="goIntoFolder(file.name)" v-if="file.type == 'folder'" class="grey--text text--darken-4">{{file.name}}</v-btn>
       </v-card-title>
 
 
-       <v-divider></v-divider>
-      <v-card-row class="title-picture" >
 
-      <v-card-row v-if="file.type == 'file'"><img style="" :src="'http://blog-src.b0.upaiyun.com' + file_url + file.name" alt=""></v-card-row>
-        
+       <v-divider></v-divider>
+
+
+      <v-card-row v-if="file.type == 'file'" class="title-picture" >
+        <v-card-row><img style="" :src="`${config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
       </v-card-row>
+      <textarea style="width: 100%"> {{`${config.UPyun.url_prefix}${img_url}/${file.name}`}}</textarea>
       <v-divider></v-divider>
 
       <v-card-row actions>
-        <v-btn  icon="icon" :class="'grey--text text--darken-4'">
+<!--         <v-btn  icon="icon" :class="'grey--text text--darken-4'">
           <v-icon >mode_edit</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-spacer></v-spacer>
 
-        <v-btn class="red--text text--lighten-2" icon>
+        <v-btn @click.native="deleteFile(file.name)"  class="red--text text--lighten-2" icon>
           <v-icon>delete_forever</v-icon>
         </v-btn>
       </v-card-row>
@@ -47,33 +52,61 @@
   export default {
     data: () => ({
       files:[],
-      file_url: '/production/heads/'
+      file_url: '',
+      img_url: ''
     }),
     mounted: function () {
       let params = {file_url: this.file_url}
       this.getFiles(params)
+      console.log(this.config)
     },
     methods: {
       getFiles(params){
         this.axios.post('/api/admin/image_cloud/file_lists', params)    
           .then((response) => {   
-            this.files = response.data.data
+            if (response.data.success === 1) {
+              let res = response.data.data
+              if (res.error == null) {
+                this.files = res
+                if (res.length > 0) {
+                  this.img_url = this.file_url
+                } 
+              }
+            }
         })    
       },
-      getTime(UNIX_timestamp){
-        var date = new Date(UNIX_timestamp*1000);
-        var month = date.getMonth();
-        var day = date.getDay();
-        // Hours part from the timestamp
-        var hours = date.getHours();
-        // Minutes part from the timestamp
-        var minutes = "0" + date.getMinutes();
-        // Seconds part from the timestamp
-        var seconds = "0" + date.getSeconds();
+      deleteFile(path){
+        let file_path = this.img_url + '/' + path
 
-        // Will display time in 10:30:23 format
-        var formattedTime =month + ' ' + day + ' ' +hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-        return formattedTime
+        let params = {file_path: file_path}
+        this.axios.post('/api/admin/image_cloud/delete_file', params)    
+          .then((response) => {   
+            let res = response.data
+            console.log(res)
+            if (res.success === 1) {
+              this.getFiles({file_url: this.file_url})
+            }else{
+              console.log(res.msg)
+            }
+
+        })  
+      },
+      goIntoFolder(folder_name){
+        // TODO 判断 /
+        // console.log(this.file_url.slice(-1))
+
+        if (this.file_url.slice(-1) != '/') {
+          this.file_url += '/' + folder_name
+        }else{
+          this.file_url += folder_name
+        }
+        
+      }
+    },
+    watch: {
+      file_url: function (val) {
+        let params = {file_url: val}
+        this.getFiles(params)
       }
     }
   }

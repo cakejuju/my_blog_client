@@ -3,8 +3,8 @@
         <markdownEditor 
           :rows="20"
           v-model="post.content"
-          imgUploadUrl="http://v0.api.upyun.com/touko-blog-img"
-          imgBaseUrl="http://touko-blog-img.b0.upaiyun.com/"></markdownEditor>
+          imgUploadUrl="//192.168.31.20:9292/upload/posts_img"
+          :imgBaseUrl="config.UPyun.url_prefix + '/'"></markdownEditor>
       </v-card-text>
 </template>
 

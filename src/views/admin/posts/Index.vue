@@ -5,7 +5,6 @@
       <v-card-title >
         新建博客
         <!-- <v-subheader v-text="`发送到了分手大师多福多寿`"></v-subheader> -->
-
       </v-card-title>
       </v-card-row>
     </v-card>

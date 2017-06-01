@@ -113,15 +113,14 @@
             ia[i] = data.charCodeAt(i)
           }
           const blob = new Blob([ia], {type: 'image/png'})
-          // TODO send to back end
-          // this.uploadImg(blob)
-          this.pasteImg('asdasdasd')
+          this.uploadImg(blob)
         }
       },
       uploadImg (img) {
         let fd = new FormData()
         fd.append('file', img)
         this.$http.post(this.imgUploadUrl, fd).then((res) => {
+          console.log(res.data)
           if (res.data.code === 200) {
             this.pasteImg(res.data.url)
           }

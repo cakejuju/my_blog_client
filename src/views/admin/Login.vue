@@ -55,11 +55,11 @@
           </v-container>
         </v-card-text>
 
-        <v-card-row actions class="white">
+<!--         <v-card-row actions class="white">
           <v-btn flat class="grey--text text--darken-2">注册本站</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click.native="loginPost" flat class="grey--text text--darken-2">GO</v-btn>
-        </v-card-row>
+        </v-card-row> -->
 
 
       </v-card>

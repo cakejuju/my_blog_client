@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 
 Vue.prototype.readCookie = function(name) {
     var nameEQ = name + "=";
@@ -32,3 +33,25 @@ Date.prototype.yyyymmdd = function() {
           (dd>9 ? '' : '0') + dd
          ].join('-');
 };
+
+var Http = {}
+
+const http = axios.create({
+  baseURL: process.env.BASE_URL,
+  timeout: 5000
+})
+
+Http.install = function (Vue, options) {
+  Vue.prototype.$http = http
+}
+
+Vue.use(Http)
+
+axios.post('/api/get_config', {})    
+  .then((response) => {   
+    let res = response.data
+    if (res.success === 1) {
+      Vue.prototype.config = res.data
+    }
+})
+
