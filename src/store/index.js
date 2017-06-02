@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    currentMember: {}
+    currentMember: {},
+    config: {}
   },
   mutations: {
     setMember (state, payload) {
@@ -17,6 +18,8 @@ export default new Vuex.Store({
       state.currentMember = payload  
     },flushMember(state){
       state.currentMember = {}
+    },setConfig(state, payload){
+      state.config = payload  
     }
   }
 })

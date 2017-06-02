@@ -132,7 +132,6 @@ export default {
     // the store of vuex will be empty after page refresh 
     // 若在 vuex 中 currentMember logged 部位 true 
     // 说明页面被刚重定向过
-    console.log(!this.$store.state.currentMember.logged)
     if (!this.$store.state.currentMember.logged) {
       let jwt = this.readCookie('jwt')
       // 判断 cookie 中的 jwt 

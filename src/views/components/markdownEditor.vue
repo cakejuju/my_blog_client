@@ -37,7 +37,8 @@
       mark: {},
       preview: false,
       column: false,
-      fullscreen: false
+      fullscreen: false,
+      imgBaseUrl: ''
     }),
     props: {
       rows: {
@@ -46,14 +47,14 @@
       },
       placeholder: {
         type: String,
-        default: '写起啊...'
+        default: '写起...'
       },
       imgUpload: {
         type: Boolean,
         default: true
       },
       imgUploadUrl: String,
-      imgBaseUrl: String,
+      // imgBaseUrl: String,
       value: [String, Number]
     },
     watch: {
@@ -79,6 +80,22 @@
         }
       })
     },
+    mounted(){
+    if (!this.$store.state.config.UPyun) {
+      this.axios.post('/api/get_config', {})    
+        .then((response) => {   
+          let res = response.data
+          if (res.success === 1) {
+            this.$store.commit('setConfig', res.data)
+
+            this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
+            console.log(this.imgBaseUrl)
+          }
+      })
+    }
+
+    },
+
     methods: {
       handleInput (event) {
         let value = event.target.value
@@ -177,7 +194,7 @@
         left: 0;
         right: 0;
         background-color: #eee;
-        z-index: 2;
+        z-index: 1;
         box-sizing: border-box;
         padding: 1rem;
         overflow: auto;

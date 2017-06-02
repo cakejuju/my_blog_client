@@ -64,6 +64,12 @@
         <v-icon >plus_one</v-icon>
       </v-btn>
 
+
+      <v-btn v-if="$store.state.currentMember.is_master" icon="icon" :class="'grey--text text--darken-4'" style="z-index:0" @click.native="$router.push(`/admin/posts/edit/${item.id}`)">
+        <v-icon >edit</v-icon>
+      </v-btn>
+
+
       <v-spacer></v-spacer>
       <v-btn @click.native="showCommnets()" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
         <v-icon >comment</v-icon>

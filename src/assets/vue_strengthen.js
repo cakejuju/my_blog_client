@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import store from '../store' 
 
 Vue.prototype.readCookie = function(name) {
     var nameEQ = name + "=";
@@ -51,7 +52,12 @@ axios.post('/api/get_config', {})
   .then((response) => {   
     let res = response.data
     if (res.success === 1) {
-      Vue.prototype.config = res.data
+      store.commit('setConfig', res.data)
     }
 })
+
+
+
+
+
 

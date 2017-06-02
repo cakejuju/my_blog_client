@@ -22,14 +22,14 @@
       </v-card-title>
 
 
-
        <v-divider></v-divider>
 
 
       <v-card-row v-if="file.type == 'file'" class="title-picture" >
-        <v-card-row><img style="" :src="`${config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
+        <v-card-row><img style="" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
       </v-card-row>
-      <textarea style="width: 100%"> {{`${config.UPyun.url_prefix}${img_url}/${file.name}`}}</textarea>
+
+      <textarea style="width: 100%"> {{`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`}}</textarea>
       <v-divider></v-divider>
 
       <v-card-row actions>
@@ -58,7 +58,8 @@
     mounted: function () {
       let params = {file_url: this.file_url}
       this.getFiles(params)
-      console.log(this.config)
+
+      
     },
     methods: {
       getFiles(params){

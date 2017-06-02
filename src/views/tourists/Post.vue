@@ -18,6 +18,7 @@
      <v-card style="width:100%;box-sizing:''; margin-top:5px" >
        <v-card-row actions style=" background: #e0e0e0;  ">
          <v-btn v-if="earlier_post!=null" @click.native="getPosts(earlier_post.id)" flat :class="'grey--text text--darken-4'">{{earlier_post.title}}</v-btn>
+
          <v-spacer></v-spacer>
          <v-btn v-if="later_post!=null" @click.native="getPosts(later_post.id)" flat :class="'grey--text text--darken-4'">{{later_post.title}}</v-btn>
        </v-card-row>
