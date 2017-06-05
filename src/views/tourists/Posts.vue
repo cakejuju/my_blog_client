@@ -36,7 +36,29 @@ export default {
   components: {
     'two-columns-posts': TwoColumnsPosts
   },
+  created () {
+    this.marked = marked.setOptions({
+      renderer: new marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      langPrefix: 'hljs ',
+      highlight: function (code) {
+        return require('highlight.js').highlightAuto(code).value
+      }
+    })
+  },
   methods: {
+    strip(html){
+       var tmp = document.createElement("DIV");
+       tmp.innerHTML = html;
+       return tmp.textContent||tmp.innerText;
+    },
+
     sortPosts(item){
       // 若总高度相等 则随机分配, 否则分配给小的 然后增加高度
       // 渲染
@@ -61,7 +83,8 @@ export default {
             let l_content = posts[i].l_content
             if (l_content != undefined) {
               posts[i].content = marked(content)
-              posts[i].l_content = marked(l_content)
+              // console.log(this.strip(marked(content)).replace(/(\r\n|\n|\r)/gm,""))
+              posts[i].l_content = marked(content)
             }
           } 
           // console.log(document.cookie)

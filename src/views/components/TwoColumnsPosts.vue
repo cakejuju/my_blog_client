@@ -2,14 +2,14 @@
 
   <div>
     <!-- 小屏幕只显示一列 -->
-    <div class="row" v-if="windowWidth < 1200">
+    <div class="row" v-if="windowWidth < 1000">
       <v-col xs12 sm12 lg12 xl12 v-for="item in postsData.all" :key="item" style="margin:20px 0px;">
          <post-card :item="item"  @tagClicked="tagClicked"/>
       </v-col>
     </div>
 
     <!-- 大屏幕显示两列 -->
-    <div class="row" v-if="windowWidth >= 1200">
+    <div class="row" v-if="windowWidth >= 1000">
         <!-- 左侧 -->
        <div style="width:50%; float:left">
          <v-col xs12 v-for="item in postsData.left" :key="item.id" style="margin:20px 6px">

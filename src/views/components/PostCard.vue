@@ -37,14 +37,14 @@
       </v-list-tile>
     </v-card-row>
 
-    <v-card-row style="height:20px;margin-top:5px">
+    <v-card-row style="height:20px;margin-top:1em;">
       <v-card-title>
-        <span style="font-size:17px;font-weight:500" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
+        <span style="font-size:25px;font-weight:500;color:#969696" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
 
     <!-- 文字 -->
-    <v-card-text>
+    <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em">
       <v-card-row @click.native="$router.push('/tou/posts/' + item.id)">
         <div >
           <div v-html="item.l_content" ></div>
@@ -54,8 +54,8 @@
 
 
     <!-- 图片 -->
-    <v-card-row>
-      <img v-if="item.img_url!='' && item.img_url!=null" :img=item.img_url :src="item.img_url" style="width:100%;height:auto"></img>
+    <v-card-row v-if="item.img_url != ''&& item.img_url!= null">
+      <img :img=item.img_url :src="item.img_url" style="width:100%;height:auto"></img>
     </v-card-row>
     <!-- 底部 -->
 
@@ -181,6 +181,14 @@
         required: true
       }
     },
+    mounted(){
+      let card_content = document.getElementById(`card_content_${this.item.id}`)
+      if (card_content.clientHeight > 300) {
+        card_content.style.height = '300px'
+        card_content.style.overflow = 'scroll'
+      }
+    },
+
     created () {
       this.marked = marked.setOptions({
         renderer: new marked.Renderer(),
@@ -199,6 +207,7 @@
     },
     methods:{
       toHtml(str){
+        console.log(str)
         return marked(str)
       },
       showCommnets(){
