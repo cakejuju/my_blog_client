@@ -75,6 +75,7 @@
         sanitize: false,
         smartLists: true,
         smartypants: false,
+        langPrefix: 'hljs ',
         highlight: function (code) {
           return require('highlight.js').highlightAuto(code).value
         }
@@ -233,4 +234,6 @@
       left: 0;
     }
   }
+
+
 </style>

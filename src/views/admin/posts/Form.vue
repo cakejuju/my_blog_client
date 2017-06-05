@@ -21,7 +21,7 @@
         <v-card-row actions>
           <v-btn v-if="action==='new'" class="mr-3" default  large @click.native="resetPost">重置</v-btn>
 
-          <v-btn v-if="action==='new'" class="white--text" error large :disabled="post.title===''" @click.native="submitPost()">发布</v-btn>
+          <v-btn v-if="action==='new'" class="white--text" error large :disabled="post.title===''" @click.native="createPost()">发布</v-btn>
 
           <v-btn v-if="action==='edit'" class="white--text" error large :disabled="post.title===''" @click.native="updatePost">更新</v-btn>
         </v-card-row>
@@ -59,7 +59,6 @@
       markdownEditor
     },
     mounted () {
-      // console.log(this.postId)
       if (this.action === "edit") {
         this.getPosts(this.postId)
       }
@@ -73,7 +72,17 @@
         this.post.title = ''
         this.post.content = ''
       },
-      submitPost(){
+      createPost(){
+        let params = this.post
+        this.axios.post('/api/admin/posts/create', params)    
+        .then((response) => {   
+          let res = response.data
+          console.log(res)
+          if (res.success === 1) {
+            let post = res.post
+            this.$router.push(`/tou/posts/${post.id}`)
+          }
+        })  
       },
       updatePost(){
         let params = this.post
@@ -84,7 +93,6 @@
           let res = response.data
           console.log(res)
           if (res.success === 1) {
-            console.log(this.$route.push)
             this.$router.push(`/tou/posts/${this.postId}`)
           }
         })  
