@@ -207,7 +207,6 @@
     },
     methods:{
       toHtml(str){
-        console.log(str)
         return marked(str)
       },
       showCommnets(){

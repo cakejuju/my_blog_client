@@ -2,8 +2,8 @@
   <v-app id="sidebar-example-2" class="elevation-1" top-toolbar left-fixed-sidebar sidebar-under-toolbar :left-fixed-sidebar="sidebar">
     <v-toolbar  class="red" fixed>
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
-      <v-toolbar-title class="hidden-sm-and-down">My Blog</v-toolbar-title>
-      <v-text-field prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
+      <v-toolbar-title class="hidden-sm-and-down">可以说是很帅了</v-toolbar-title>
+      <v-text-field v-model="query" prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
 
       <!-- 登陆以及登出 -->
       <v-chip v-if="!$store.state.currentMember.logged" @click.native="login"  label class="primary white--text" >登陆</v-chip>
@@ -96,8 +96,16 @@ export default {
       items:[], // 在 mounted 函数中加载
       loginCardDisplay: false,
       adminSideBar: [{title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'},
-                     {title: '云图片管理', avatar: 'photo_library', divider: false, href: '/admin/cloud_images'}]
+                     {title: '云图片管理', avatar: 'photo_library', divider: false, href: '/admin/cloud_images'}],
+      query: ''
     }
+  },
+  watch: {
+    query: function (val) {
+      this.$store.commit('setQuery', val)
+      // console.log(this.$store.state.query)
+    },
+
   },
   components: {
     'login-card': LoginCard

@@ -9,7 +9,12 @@ export default new Vuex.Store({
 
   state: {
     currentMember: {},
-    config: {}
+    config: {},
+    query: ''
+  },
+
+  getters: {
+    getQuery: state => () => state.query
   },
   mutations: {
     setMember (state, payload) {
@@ -20,7 +25,10 @@ export default new Vuex.Store({
       state.currentMember = {}
     },setConfig(state, payload){
       state.config = payload  
+    },setQuery(state, payload){
+      state.query = payload  
     }
+
   }
 })
 

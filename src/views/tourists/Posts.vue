@@ -30,7 +30,9 @@ export default {
       rightHeight: 0,
       midHeight: 0,
       items: [],
-      clickedTag: {}
+      clickedTag: {},
+      queryString: '' // 全局搜索的内容
+
     }
   },
   components: {
@@ -87,7 +89,6 @@ export default {
               posts[i].l_content = marked(content)
             }
           } 
-          // console.log(document.cookie)
           this.items = posts
 
           this.wfData.all = posts
@@ -100,21 +101,12 @@ export default {
     queryTagPost(){
       this.flushData()
 
-      let related_object = {through_model: 'Pt', 
-                            related_model: 'Tag',
-                            key: 'tag_id', 
-                            value: Object.values(this.clickedTag), 
-                            group: 'post_id'}
-      let order_params = {sort_by: 'created_at', order: 'DESC'}
-      let query_params = {limit:          30, 
-                          current_page:   1,
-                          order_params:   order_params,
-                          related_object: related_object}
-      this.getPosts(query_params)
+      this.getPosts(this.queryParams())
     },
     initView(){
      let order_params = {sort_by: 'created_at', order: 'DESC'}
-     let query_params = {limit:30, current_page: 1, order_params: order_params}
+     let query_params = {limit:30, current_page: 1, 
+                         order_params: order_params}
      this.getPosts(query_params)
     },
     tagAdded(id, name){
@@ -130,12 +122,34 @@ export default {
       this.leftHeight = 0
       this.rightHeight = 0
       this.midHeight = 0      
-    }
+    },
+    queryParams(){
+      let related_object = {through_model: 'Pt', 
+                            related_model: 'Tag',
+                            key: 'tag_id', 
+                            value: Object.values(this.clickedTag), 
+                            group: 'post_id'}
+      let order_params = {sort_by: 'created_at', order: 'DESC'}
+      let query_params = {limit:          30, 
+                          current_page:   1,
+                          order_params:   order_params,
+                          related_object: related_object,
+                          queryString: this.queryString}
+      return query_params;
+   }
 
 
   },
   mounted: function () {
+    this.$store.watch(this.$store.getters.getQuery, query => {
+      this.queryString = query
+      this.flushData()
+
+      this.getPosts(this.queryParams())
+    })
+
     this.initView()
+
   }
 }
 
