@@ -79,6 +79,7 @@ export default {
     getPosts(params){
       this.axios.post('/api/get_posts', params)    
         .then((response) => {   
+          this.flushData()
           let posts = response.data.json_data
           for(let i = 0; i < posts.length; i++){
             let content = posts[i].content
@@ -99,7 +100,6 @@ export default {
       })    
     },
     queryTagPost(){
-      this.flushData()
 
       this.getPosts(this.queryParams())
     },
@@ -142,10 +142,12 @@ export default {
   },
   mounted: function () {
     this.$store.watch(this.$store.getters.getQuery, query => {
+      console.log(query)
       this.queryString = query
-      this.flushData()
+      this.queryTagPost()
+      // this.flushData()
 
-      this.getPosts(this.queryParams())
+      // this.getPosts(this.queryParams())
     })
 
     this.initView()

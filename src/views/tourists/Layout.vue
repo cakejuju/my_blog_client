@@ -3,7 +3,7 @@
     <v-toolbar  class="red" fixed>
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
       <v-toolbar-title class="hidden-sm-and-down">可以说是很帅了</v-toolbar-title>
-      <v-text-field v-model="query" prepend-icon="search" label="关键字搜索..." hide-details single-line dark></v-text-field>
+      <v-text-field v-if="`${$route.path}`==`/tou/posts`" v-model="query" prepend-icon="search" label="可按标签或标题搜索..." hide-details single-line dark></v-text-field>
 
       <!-- 登陆以及登出 -->
       <v-chip v-if="!$store.state.currentMember.logged" @click.native="login"  label class="primary white--text" >登陆</v-chip>
