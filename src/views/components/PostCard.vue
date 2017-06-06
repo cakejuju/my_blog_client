@@ -45,7 +45,7 @@
 
     <!-- 文字 -->
     <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em">
-      <v-card-row @click.native="$router.push('/tou/posts/' + item.id)">
+      <v-card-row >
         <div >
           <div v-html="item.l_content" ></div>
         </div>
@@ -64,6 +64,9 @@
         <v-icon >plus_one</v-icon>
       </v-btn>
 
+      <v-btn v-if="!this.$route.params.id" @click.native="$router.push('/tou/posts/' + item.id)" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'" style="z-index:0">
+        <v-icon >visibility</v-icon>
+      </v-btn>
 
       <v-btn v-if="$store.state.currentMember.is_master" icon="icon" :class="'grey--text text--darken-4'" style="z-index:0" @click.native="$router.push(`/admin/posts/edit/${item.id}`)">
         <v-icon >edit</v-icon>
