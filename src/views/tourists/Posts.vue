@@ -25,6 +25,7 @@ export default {
   name: '',
   data () {
     return {    
+      limit: 12,
       wfData: {left:[], right:[], mid:[],all:[]},
       leftHeight: 0,
       rightHeight: 0,
@@ -100,12 +101,11 @@ export default {
       })    
     },
     queryTagPost(){
-
       this.getPosts(this.queryParams())
     },
     initView(){
      let order_params = {sort_by: 'created_at', order: 'DESC'}
-     let query_params = {limit:30, current_page: 1, 
+     let query_params = {limit: this.limit, current_page: 1, 
                          order_params: order_params}
      this.getPosts(query_params)
     },
@@ -130,7 +130,8 @@ export default {
                             value: Object.values(this.clickedTag), 
                             group: 'post_id'}
       let order_params = {sort_by: 'created_at', order: 'DESC'}
-      let query_params = {limit:          30, 
+
+      let query_params = {limit:          this.limit, 
                           current_page:   1,
                           order_params:   order_params,
                           related_object: related_object,
@@ -142,16 +143,12 @@ export default {
   },
   mounted: function () {
     this.$store.watch(this.$store.getters.getQuery, query => {
-      console.log(query)
+
       this.queryString = query
       this.queryTagPost()
-      // this.flushData()
-
-      // this.getPosts(this.queryParams())
     })
 
     this.initView()
-
   }
 }
 

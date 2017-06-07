@@ -187,8 +187,11 @@
     mounted(){
       let card_content = document.getElementById(`card_content_${this.item.id}`)
       if (card_content.clientHeight > 300) {
+        this.postHeight(300)
         card_content.style.height = '300px'
         card_content.style.overflow = 'scroll'
+      }else{
+        this.postHeight(card_content.clientHeight)
       }
     },
 
@@ -278,6 +281,25 @@
           this.loginCardDisplay = true
         }
 
+      },
+      // 回传每个 post 的高度
+      postHeight(height){
+        this.$emit('postHeight', height)
+        // console.log(this.$store.state.currentMember.is_master)
+        // 若是管理员 则更新高度
+        if (this.$store.state.currentMember.is_master) {
+          let params = {post_id: this.item.id, height: height}
+          this.axios.post('/api/admin/posts/update_height', params)    
+            .then((response) => {   
+              let res = response.data
+              if (res.success == 1) {
+                console.log(res)
+                // this.comments = res.json_data
+              }else{
+              }
+          })  
+        }
+        
       },
       tagClicked(id, name){
         this.$emit('tagClicked', id, name)

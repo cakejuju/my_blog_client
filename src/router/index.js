@@ -42,7 +42,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: TLayout
+      component: Home
     },
     {
       path: '/admin/',

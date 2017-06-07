@@ -103,7 +103,6 @@ export default {
   watch: {
     query: function (val) {
       this.$store.commit('setQuery', val)
-      // console.log(this.$store.state.query)
     },
 
   },
@@ -161,8 +160,8 @@ export default {
         }) 
       }
     }else{
-
-      if (this.$store.state.currentMember.is_master) {
+      let jwt = this.readCookie('jwt')
+      if (this.$store.state.currentMember.is_master && jwt != '' && jwt != null) {
           let adminSideBar = this.adminSideBar
           items = adminSideBar.concat(items);
       }  
