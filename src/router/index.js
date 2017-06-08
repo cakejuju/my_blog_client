@@ -18,6 +18,7 @@ import ACloudImages from '../views/admin/cloud_images/Index'
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
 import TAbout from '../views/tourists/About'
+import TGallery from '../views/tourists/Gallery'
 import TPost from '../views/tourists/Post' // 单个post
 import PostsTwoColumns from '../views/tourists/PostsThreeColumns' // 每行三列的post
 
@@ -75,10 +76,11 @@ export default new Router({
       path: '/tou/',
       name: 'touristsPages',
       component: TLayout,
-      children: [ {path: 'posts', component: TPosts, name: 'posts', meta: {title: 'all blogs'}},
+      children: [ {path: 'posts', component: TPosts, name: 'posts', meta: {title: '所有博客'}},
                   {path: 'posts/three_columns', component: PostsTwoColumns, name: 'postsThreeColumns', meta: {title: 'postsThreeColumns'}},
                   {path: 'about', component: TAbout, name: 'tabout', meta: {title: '关于本站'}},
-                  {path: 'posts/:id', component: TPost, name: 'postDetail', meta: {title: '内容'}},
+                  {path: 'posts/:id', component: TPost, name: 'postDetail', meta: {title: '单个展示'}},
+                  {path: 'gallery', component: TGallery, name: 'gallery', meta: {title: '画廊'}},
           
           ]
     }

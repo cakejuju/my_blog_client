@@ -1,5 +1,5 @@
 <template>
-  <p>这里是关于页面呀</p>
+  <h2>还没开始搞</h2>
 </template>
 
 

@@ -7,7 +7,7 @@
 
       <!-- 中间的一列 -->
       <v-col xs10 sm10 lg10 xl10 style="float:left;">
-         <post-card  :item="post" :imgHeight="'500px'"></post-card>
+         <post-card :item="post" :imgHeight="'500px'"></post-card>
       </v-col>
 
       <v-col xs1 sm1 lg1 xl1 style="float:left;">

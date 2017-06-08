@@ -1,12 +1,12 @@
 <template>
   <v-app id="sidebar-example-2" class="elevation-1" top-toolbar left-fixed-sidebar sidebar-under-toolbar :left-fixed-sidebar="sidebar">
-    <v-toolbar  class="red" fixed>
+    <v-toolbar  class="grey" fixed>
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
       <v-toolbar-title class="hidden-sm-and-down">可以说是很帅了</v-toolbar-title>
       <v-text-field v-if="`${$route.path}`==`/tou/posts`" v-model="query" prepend-icon="search" label="可按标签或标题搜索..." hide-details single-line dark></v-text-field>
-
+      <v-spacer></v-spacer>
       <!-- 登陆以及登出 -->
-      <v-chip v-if="!$store.state.currentMember.logged" @click.native="login"  label class="primary white--text" >登陆</v-chip>
+      <v-btn v-if="!$store.state.currentMember.logged" @click.native="login"  label class="grey  white--text" >登陆</v-btn>
       <el-popover ref="logout" placement="bottom" width="350" trigger="click" >
         <v-card class="grey--text text--darken-2" v-show="$store.state.currentMember.logged">
           <v-list three-line>
@@ -134,7 +134,7 @@ export default {
     let items = [
                  {title: '首页', avatar: 'home', divider: false, href: '/tou/posts'},
                  {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
-                 {title: '建设中...', avatar: 'build', divider: true, href: '/'} ]
+                 {title: '画廊（建设中...）', avatar: 'picture_in_picture', divider: true, href: '/tou/gallery'}]
 
     // the store of vuex will be empty after page refresh 
     // 若在 vuex 中 currentMember logged 部位 true 
@@ -155,7 +155,6 @@ export default {
                 this.items = items
               }
               this.$store.commit('setMember', res.current_member)
-              // console.log(res.current_member)
             }  
         }) 
       }

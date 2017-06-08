@@ -37,12 +37,12 @@
       </v-list-tile>
     </v-card-row>
 
-    <v-card-row style="height:20px;margin-top:1em;">
+    <v-card-row style="height:20px;margin-top:2em;">
       <v-card-title>
         <span style="font-size:25px;font-weight:500;color:#969696" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
-
+    <!-- {{item.height}} -->
     <!-- 文字 -->
     <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em">
       <v-card-row >
@@ -152,6 +152,10 @@
 .slide-fade-enter, .slide-fade-leave-active {
   transform: translateY(-50px);
   opacity: 0;
+}
+
+img{
+  width: 100%
 }
 
 </style>
@@ -275,7 +279,6 @@
                 this.toastClass = 'orange darken-2'
               }
           })
-
         }else{
           e.stopPropagation() 
           this.loginCardDisplay = true
@@ -285,21 +288,14 @@
       // 回传每个 post 的高度
       postHeight(height){
         this.$emit('postHeight', height)
-        // console.log(this.$store.state.currentMember.is_master)
         // 若是管理员 则更新高度
         if (this.$store.state.currentMember.is_master) {
           let params = {post_id: this.item.id, height: height}
           this.axios.post('/api/admin/posts/update_height', params)    
             .then((response) => {   
               let res = response.data
-              if (res.success == 1) {
-                console.log(res)
-                // this.comments = res.json_data
-              }else{
-              }
           })  
         }
-        
       },
       tagClicked(id, name){
         this.$emit('tagClicked', id, name)

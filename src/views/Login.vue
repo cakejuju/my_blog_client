@@ -248,7 +248,6 @@
       handleAvatarError(err, file, fileList){
         this.toastDisplay = true
         this.toastContent = err
-        // console.log(err)
         return false
       },
       // 上传图片成功 得到后端回传的暂存文件地址
