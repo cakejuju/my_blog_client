@@ -85,7 +85,7 @@ export default {
       smartypants: false,
       langPrefix: 'hljs ',
       highlight: function (code) {
-        return require('highlight.js').highlightAuto(code).value
+        // return require('highlight.js').highlightAuto(code).value
       }
     })
   },
