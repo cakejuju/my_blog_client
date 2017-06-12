@@ -82,7 +82,7 @@
 
     <transition name="slide-fade">
       <div v-if="showCommentValue">
-        <v-list  id="scroll_list" style="max-height:18em;overflow: scroll" three-line >
+        <v-list :id="`scroll_list_${item.id}`" style="max-height:18em;overflow: scroll" three-line >
           <template v-for="comment in comments">
             <v-card>
               <v-list-tile avatar style="width:100%;" :class="'white'">
@@ -265,10 +265,9 @@ img{
                 this.toastContent = res.msg
                 this.commentContent = ''
                 this.toastClass = 'grey darken-3'
-
                 // 获取 dom 刷新的事件
                 this.$nextTick(function() {
-                  let objDiv = document.getElementById("scroll_list");
+                  let objDiv = document.getElementById(`scroll_list_${this.item.id}`);
                   objDiv.scrollTop = objDiv.scrollHeight
                 })
 

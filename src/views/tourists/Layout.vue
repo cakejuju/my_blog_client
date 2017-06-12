@@ -132,9 +132,9 @@ export default {
   mounted: function () {
     // 根据是否为管理者加载侧边栏
     let items = [
-                 {title: '首页', avatar: 'home', divider: false, href: '/tou/posts'},
+                 {title: '博客', avatar: 'import_contacts', divider: false, href: '/tou/posts'},
                  {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
-                 {title: '画廊（建设中...）', avatar: 'picture_in_picture', divider: true, href: '/tou/gallery'}]
+                 {title: '画廊（建设中...）', avatar: 'color_lens', divider: true, href: '/tou/gallery'}]
 
     // the store of vuex will be empty after page refresh 
     // 若在 vuex 中 currentMember logged 部位 true 
