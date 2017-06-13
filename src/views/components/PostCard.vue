@@ -47,7 +47,7 @@
     <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em">
       <v-card-row >
         <div >
-          <div v-html="item.l_content" ></div>
+          <div v-html="toHtml(item.content)" ></div>
         </div>
       </v-card-row>
     </v-card-text>

@@ -120,7 +120,7 @@ export default {
                   let content = posts[i].content
                   let l_content = posts[i].l_content
                   if (l_content != undefined) {
-                    posts[i].content = marked(content)
+                    // posts[i].content = marked(content)
                     posts[i].l_content = marked(content)
                   }
                 } 

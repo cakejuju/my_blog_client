@@ -51,8 +51,8 @@ export default {
       this.post = data.post
       this.earlier_post = data.earlier_post
       this.later_post = data.later_post
-      this.post.l_content = marked(this.post.content)
-      console.log(this.post.content)
+      // this.post.l_content = marked(this.post.content)
+      // console.log(this.post.content)
     },
     getPosts(id){
        this.axios.post('/api/get_posts_by_id', {id: id})    
