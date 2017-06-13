@@ -60,7 +60,7 @@
     <!-- 底部 -->
 
     <v-card-row actions :class="item.bottom_color != null ? item.bottom_color : 'white'">
-      <v-btn icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'" style="z-index:0">
+      <v-btn @click.native="plusOne" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'" style="z-index:0">
         <v-icon >plus_one</v-icon>
       </v-btn>
 
@@ -120,7 +120,7 @@
 
 
           <v-card-row style="padding:0 0;margin:0 0" actions :class="'white'">
-            <v-icon :class="'grey--text text--darken-2'">photo</v-icon>
+            <!-- <v-icon :class="'grey--text text--darken-2'">photo</v-icon> -->
             <v-spacer></v-spacer>
             <v-btn @click.native="publishComment" flat :class="'grey--text text--darken-2'">
               发表
@@ -216,6 +216,11 @@ img{
       })
     },
     methods:{
+      plusOne(){
+        this.toastDisplay = true
+        this.toastContent = '功能尚未完成'
+        this.toastClass = 'grey darken-3'
+      },
       toHtml(str){
         return marked(str)
       },

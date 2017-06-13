@@ -43,7 +43,14 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        // 判断是否已经登陆
+
+        next('/tou/posts')
+
+
+      }
     },
     {
       path: '/admin/',

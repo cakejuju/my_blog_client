@@ -48,7 +48,7 @@ export default {
   name: '',
   data () {
     return {    
-      limit: 3,
+      limit: 4,
       current_page: 1,
       wfData: {left:[], right:[], mid:[],all:[]},
       leftHeight: 0,
