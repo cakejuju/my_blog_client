@@ -43,7 +43,7 @@
     props: {
       rows: {
         type: Number,
-        default: 9
+        default: 90
       },
       placeholder: {
         type: String,
@@ -82,18 +82,18 @@
       })
     },
     mounted(){
-    if (!this.$store.state.config.UPyun) {
-      this.axios.post('/api/get_config', {})    
-        .then((response) => {   
-          let res = response.data
-          if (res.success === 1) {
-            this.$store.commit('setConfig', res.data)
+      if (!this.$store.state.config.UPyun) {
+        this.axios.post('/api/get_config', {})    
+          .then((response) => {   
+            let res = response.data
+            if (res.success === 1) {
+              this.$store.commit('setConfig', res.data)
 
-            this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
-            console.log(this.imgBaseUrl)
-          }
-      })
-    }
+              this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
+              console.log(this.imgBaseUrl)
+            }
+        })
+      }
 
     },
 

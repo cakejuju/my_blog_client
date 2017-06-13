@@ -189,6 +189,7 @@ img{
       }
     },
     mounted(){
+      // console.log(this.item.content)
       let card_content = document.getElementById(`card_content_${this.item.id}`)
       if (card_content.clientHeight > 300) {
         this.postHeight(300)
@@ -218,7 +219,7 @@ img{
     methods:{
       plusOne(){
         this.toastDisplay = true
-        this.toastContent = '功能尚未完成'
+        this.toastContent = '点赞尚未完成'
         this.toastClass = 'grey darken-3'
       },
       toHtml(str){

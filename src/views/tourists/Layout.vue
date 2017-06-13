@@ -41,7 +41,7 @@
     <main>
       <!-- 侧边栏 -->
       <v-sidebar class="grey lighten-2" left fixed v-model="sidebar" height="100%">
-        <v-list dense>
+        <v-list dense style="margin-left: 0px;">
           <v-list-item v-for="(item,i) in items" :key="item.title">
             <v-divider v-if="item.divider" />
             <v-list-tile style="margin:15px 5px" router :href="item.href">
@@ -78,6 +78,11 @@
     padding-right: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
+}
+
+
+ul {
+     margin-left: 0px; 
 }
 
 
@@ -132,7 +137,7 @@ export default {
   mounted: function () {
     // 根据是否为管理者加载侧边栏
     let items = [
-                 {title: '博客', avatar: 'import_contacts', divider: false, href: '/tou/posts'},
+                 {title: '博文', avatar: 'import_contacts', divider: false, href: '/tou/posts'},
                  {title: '关于本站', avatar: 'face', divider: false, href: '/tou/about'},
                  {title: '画廊（建设中...）', avatar: 'color_lens', divider: true, href: '/tou/gallery'}]
 
