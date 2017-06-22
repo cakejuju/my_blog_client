@@ -189,8 +189,8 @@ img{
       }
     },
     mounted(){
-      // console.log(this.item.content)
       let card_content = document.getElementById(`card_content_${this.item.id}`)
+
       if (card_content.clientHeight > 300) {
         this.postHeight(300)
         card_content.style.height = '300px'
@@ -223,6 +223,8 @@ img{
         this.toastClass = 'grey darken-3'
       },
       toHtml(str){
+        str = str || 'none'
+
         return marked(str)
       },
       showCommnets(){
@@ -247,7 +249,6 @@ img{
               }
           })     
         }
-
       },
       LoggedIn(){
         this.loginCardDisplay = false
