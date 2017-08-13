@@ -130,6 +130,9 @@ pre{
   padding-left: 15px;
 }
 
+html{
+  font-size: 17px;
+}
 /*code:after, code:before, kbd:after, kbd:before {
      content: ""; 
 }*/

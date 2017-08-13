@@ -37,14 +37,14 @@
       </v-list-tile>
     </v-card-row>
 
-    <v-card-row style="height:20px;margin-top:2em;">
+    <v-card-row style="height:20px;margin-top:2em;margin-left:1em;">
       <v-card-title>
         <span style="font-size:25px;font-weight:500;color:#969696" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
     <!-- {{item.height}} -->
     <!-- 文字 -->
-    <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em">
+    <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em; padding-left:2em;">
       <v-card-row >
         <div >
           <div v-html="toHtml(item.content)" ></div>
