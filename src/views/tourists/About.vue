@@ -3,9 +3,9 @@
   <v-card>
 
     <v-card-text  style="height:auto;margin-top:1em">
-
-
+      <h5 style="">关于我</h5>
      <v-list-tile avatar style="width:100%" :class="'white'">
+
         <v-list-tile-avatar>
           <a href="https://github.com/cakejuju"><img v-bind:src="'/static/github.png'"/></a>
         </v-list-tile-avatar>
@@ -13,16 +13,21 @@
       </v-list-tile>
 
      <v-divider/>
+     <v-card-row >
+     <div>
+       <h5 style="margin-top:1em">关于本站</h5>
+       <p> 上线于  2017年 4 月 21 日，记录我的一些心得体会，有趣的事，希望能坚持下去。</p>
+     </div>
+
+     </v-card-row>
+     <v-divider/>
      <br>
-      <v-card-row style="maring-top:5em">
+      <v-card-row >
         <div>
           <h5>License</h5>
-
           <p>The MIT License (MIT)</p>
-
           <p>Copyright (c) 2017 Joey</p>
-
-          <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+<!--           <p>Permission is hereby granted, free of charge, to any person obtaining a copy
           of this software and associated documentation files (the "Software"), to deal
           in the Software without restriction, including without limitation the rights
           to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -38,9 +43,7 @@
           AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
           LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
           OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-          THE SOFTWARE.</p>
-
-
+          THE SOFTWARE.</p> -->
         </div>
       </v-card-row>
     </v-card-text>
@@ -66,7 +69,7 @@ export default {
   methods: {
   },
   mounted: function () {
-    console.log(marked('[我的github传送门](https://github.com/cakejuju)'))
+    // console.log(marked('[我的github传送门](https://github.com/cakejuju)'))
   }
 }
 
