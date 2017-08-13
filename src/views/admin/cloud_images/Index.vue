@@ -119,7 +119,7 @@
   }
   .masonry {
     column-gap: 1.5rem;
-    column-count: 3;
+    column-count: 1;
 
     .item {
       display: inline-block;

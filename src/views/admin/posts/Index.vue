@@ -10,18 +10,16 @@
     </v-card>
 
     <v-card class="item"v-for="post in posts" :key="post.ds">
-      <v-card-title >
+      <v-card-title>
         <span style="font-size:17px;font-weight:500" class="grey--text text--darken-4">{{post.title}}</span>
         <v-spacer></v-spacer>
         <span style="font-size:17px;" class="grey--text text--darken-4">{{post.created_strftime}}</span>
 
       </v-card-title>
        <v-divider></v-divider>
-      <v-card-row class="title-picture" >
-
-      <v-card-row><img style="" :src="post.img_url == '' ? '/static/github.png' : post.img_url" alt=""></v-card-row>
-        
-      </v-card-row>
+<!--       <v-card-row class="title-picture" >
+        <v-card-row><img style="" :src="post.img_url == '' ? '/static/github.png' : post.img_url" alt=""></v-card-row>
+      </v-card-row> -->
       <v-divider></v-divider>
 
       <v-card-row actions>
@@ -73,7 +71,7 @@
   }
   .masonry {
     column-gap: 1.5rem;
-    column-count: 3;
+    column-count: 1;
 
     .item {
       display: inline-block;
@@ -87,7 +85,7 @@
 
   @media all and (max-width: 1111px) {
     .masonry {
-      column-count: 2;
+
     }
   }
 
