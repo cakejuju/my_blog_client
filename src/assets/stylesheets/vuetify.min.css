@@ -118,7 +118,15 @@ code, kbd, pre, samp {
 
 /*代码高亮*/
 
+code:after, code:before, kbd:after, kbd:before {
+    content: "";
+    letter-spacing: -1px;
+}
 .hljs-comment,.hljs-quote{color:#969896}.hljs-variable,.hljs-template-variable,.hljs-tag,.hljs-name,.hljs-selector-id,.hljs-selector-class,.hljs-regexp,.hljs-deletion{color:#d54e53}.hljs-number,.hljs-built_in,.hljs-builtin-name,.hljs-literal,.hljs-type,.hljs-params,.hljs-meta,.hljs-link{color:#e78c45}.hljs-attribute{color:#e7c547}.hljs-string,.hljs-symbol,.hljs-bullet,.hljs-addition{color:#b9ca4a}.hljs-title,.hljs-section{color:#7aa6da}.hljs-keyword,.hljs-selector-tag{color:#c397d8}.hljs{display:block;overflow-x:auto;background:black;color:#eaeaea;padding:0.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:bold}
+
+
+/*.hljs{display:block;overflow-x:auto;padding:0.5em;background:#333;color:white}.hljs-name,.hljs-strong{font-weight:bold}.hljs-code,.hljs-emphasis{font-style:italic}.hljs-tag{color:#62c8f3}.hljs-variable,.hljs-template-variable,.hljs-selector-id,.hljs-selector-class{color:#ade5fc}.hljs-string,.hljs-bullet{color:#a2fca2}.hljs-type,.hljs-title,.hljs-section,.hljs-attribute,.hljs-quote,.hljs-built_in,.hljs-builtin-name{color:#ffa}.hljs-number,.hljs-symbol,.hljs-bullet{color:#d36363}.hljs-keyword,.hljs-selector-tag,.hljs-literal{color:#fcc28c}.hljs-comment,.hljs-deletion,.hljs-code{color:#888}.hljs-regexp,.hljs-link{color:#c6b4f0}.hljs-meta{color:#fc9b9b}.hljs-deletion{background-color:#fc9b9b;color:#333}.hljs-addition{background-color:#a2fca2;color:#333}.hljs a{color:inherit}.hljs a:focus,.hljs a:hover{color:inherit;text-decoration:underline}*/
+
 
 /*代码框的padding和margin*/
 pre{
