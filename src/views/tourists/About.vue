@@ -1,7 +1,6 @@
 <template>
   <!-- <p>这里是关于页面呀</p>   -->
-  <v-card>
-
+  <v-card class="aboutpage-container">
     <v-card-text  style="height:auto;margin-top:1em">
       <h5 style="">关于我</h5>
      <v-list-tile avatar style="width:100%" :class="'white'">
@@ -48,10 +47,32 @@
       </v-card-row>
     </v-card-text>
   </v-card>
-
-
-
 </template>
+
+<style>
+  
+.aboutpage-container {
+ margin: 2rem auto 0 auto;
+ width: 90%;
+ font-family: "Classic Grotesque W01", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, "Hiragino Sans GB", "PingFang SC", "Heiti SC", "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans", sans-serif;
+}
+@media only screen and (min-width: 720px) {
+  .aboutpage-container {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .aboutpage-container {
+    width: 100%;
+  }
+} 
+@media only screen and (min-width: 1280px) {
+  .aboutpage-container {
+    width: 90%;
+  }
+} 
+
+</style>
 
 
 <script>

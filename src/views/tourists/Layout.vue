@@ -57,7 +57,7 @@
         <div class="text-xs4right" style="position: fixed;left: 15px;bottom: 10px">© 2017  Joey</div>
       </v-sidebar>
 
-      <router-view style="margin-top:80px;width:100%" ></router-view>
+      <router-view style="margin-top:80px;" ></router-view>
     </main>
 
     <v-dialog  v-model="loginCardDisplay" > 

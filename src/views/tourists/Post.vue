@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="homepage-container">
     <v-row >
       <post-card :item="post" style=" margin: 0 auto;width: 100%;"></post-card>
       <!-- 点击左右切换 post -->
@@ -13,7 +13,6 @@
          <v-btn v-if="later_post!=null" @click.native="getPosts(later_post.id)" flat :class="'grey--text text--darken-4'">{{later_post.title}}</v-btn>
        </v-card-row>
     </v-card>
-
   </div>
 
 
