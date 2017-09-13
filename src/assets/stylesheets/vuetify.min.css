@@ -166,3 +166,14 @@ html{
     width: 70%;
   }
 } 
+
+table{
+  border-collapse: collapse;
+}
+
+table td,th {
+  text-align:center;
+  border:2px solid #dde;
+  padding: 8px
+}
+
