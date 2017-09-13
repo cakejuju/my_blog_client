@@ -14,16 +14,12 @@
        </v-card-row>
     </v-card>
   </div>
-
-
-   
 </template>
+
 <style>
-
 </style>
+
 <script>
-
-
 
 import PostCard from '../components/PostCard'
 

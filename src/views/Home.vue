@@ -3,7 +3,7 @@
   <v-app id="sidebar-example-2" class="elevation-1" top-toolbar left-fixed-sidebar sidebar-under-toolbar :left-fixed-sidebar="sidebar">
     <v-toolbar  class="red" fixed>
       <v-toolbar-side-icon @click.native.stop="sidebar = !sidebar" />
-      <v-toolbar-title class="hidden-sm-and-down">可以说是很帅了</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down">Joey's Blog</v-toolbar-title>
       <v-text-field  v-model="query" prepend-icon="search" label="可按标签或标题搜索..." hide-details single-line dark></v-text-field>
 
       <!-- 登陆以及登出 -->

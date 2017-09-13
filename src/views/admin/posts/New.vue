@@ -1,6 +1,6 @@
 
 <template>
- <div>
+ <div style="width:90%">
    <postForm action="new"></postForm>
  </div>
 </template>
