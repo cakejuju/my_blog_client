@@ -15,7 +15,7 @@
           <markdownEditor 
             :rows="20"
             v-model="post.content"
-            imgUploadUrl="//192.168.31.20:9292/upload/posts_img">  
+            imgUploadUrl="/api/upload/posts_img">  
           </markdownEditor>
         </v-card-text>
         <v-card-row actions>

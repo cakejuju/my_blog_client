@@ -1,5 +1,5 @@
 <template>
- <div>
+ <div style="width:90%"> 
    <postForm action="edit" :postId="parseInt(this.$route.params.id)"></postForm>
  </div>
 </template>

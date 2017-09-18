@@ -90,7 +90,6 @@
               this.$store.commit('setConfig', res.data)
 
               this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
-              console.log(this.imgBaseUrl)
             }
         })
       }
@@ -136,22 +135,20 @@
       },
       uploadImg (img) {
         let fd = new FormData()
+
         fd.append('file', img)
         this.$http.post(this.imgUploadUrl, fd).then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === 200) {
-            this.pasteImg(res.data.url)
+            this.pasteImg(res.data.file_path)
           }
         })
       },
       pasteImg (src) {
         let start = this.$refs.mainContent.selectionStart
-        console.log(this.$refs.mainContent)
         let end = this.$refs.mainContent.selectionEnd
-        console.log(end)
         let insert = `![](${this.imgBaseUrl}${src})`
         let content = this.content.substring(0, start) + insert + this.content.substring(end, this.content.length)
-        // console.log(content)
         this.content = content
         // 修改内容赋值时不可以直接赋给绑定的变量，否则之后光标位置调整的步骤会失效
         this.$refs.mainContent.value = content
