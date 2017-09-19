@@ -9,9 +9,9 @@
       </v-card-row>
     </v-card>
 
-    <v-card class="item"v-for="file in files" :key="file.ds">
+    <v-card style="width: 400px" class="item"v-for="file in files" :key="file.ds">
 
-      <v-card-title >
+      <v-card-title>
         <span  style="font-size:17px;font-weight:500" class="grey--text text--darken-4">
         {{new Date(file.last_modified * 1000).yyyymmdd()}}
         </span>
@@ -25,8 +25,8 @@
        <v-divider></v-divider>
 
 
-      <v-card-row v-if="file.type == 'file'" class="title-picture" >
-        <v-card-row><img style="" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
+      <v-card-row  v-if="file.type == 'file'" class="title-picture" >
+        <v-card-row><img style="height: 200px" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
       </v-card-row>
 
       <textarea style="width: 100%"> {{`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`}}</textarea>
@@ -131,13 +131,13 @@
     }
   }
 
-  @media all and (max-width: 1111px) {
+  @media all and (max-width: 300px) {
     .masonry {
-      column-count: 2;
+      column-count: 1;
     }
   }
 
-  @media all and (max-width: 600px) {
+  @media all and (max-width: 1200px) {
     .masonry {
       column-count: 1;
     }

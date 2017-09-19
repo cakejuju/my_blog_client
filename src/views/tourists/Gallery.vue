@@ -1,29 +1,28 @@
 <template>
-  <h2>还没开始搞</h2>
+  <div class="index">
+    <h3>还没开搞</h3>
+    <Photography :photos="[]"></Photography>
+  </div>
 </template>
 
-
 <script>
-
-export default {
-  name: '',
-  data () {
-    return {
-
-    }
-  },
-  components: {
-
-  },
-  methods: {
-  },
-  mounted: function () {
-
+  import axios from 'axios'
+  // import Photography from '~components/Photography'
+  import Photography from '../components/Photography'
+  export default {
+    head: {
+    },
+    components: {
+      Photography
+    },
+    // asyncData: (context) => {
+    //   return axios.get(`${context.env.baseUrl}/api/photo/list/photo`).then((res) => {
+    //     if (res.data.success) {
+    //       return {photos: res.data.fileList}
+    //     } else {
+    //       return {photos: []}
+    //     }
+    //   })
+    // }
   }
-}
-
 </script>
-
-
-
-

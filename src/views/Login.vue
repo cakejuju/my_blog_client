@@ -254,14 +254,14 @@
       // 显示图片
       handleAvatarScucess(res, file) {
         console.log(res)
-
+        // res.file_path 是图片在 server 机器的暂存地址
+        // 再客户端提交注册并且验证通过后才会上传到云服务
         this.file_path = res.file_path
         
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       // 图片上传前钩子 验证图片格式 大小
       beforeAvatarUpload(file) {
-
         const isJPG = file.type === 'image/jpeg';
         const isPNG = file.type === 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 10;

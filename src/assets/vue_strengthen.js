@@ -39,7 +39,7 @@ var Http = {}
 
 const http = axios.create({
   baseURL: process.env.BASE_URL,
-  timeout: 5000
+  timeout: 50000
 })
 
 Http.install = function (Vue, options) {
