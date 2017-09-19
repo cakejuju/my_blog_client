@@ -9,7 +9,7 @@
       </v-card-row>
     </v-card>
 
-    <v-card style="width: 400px" class="item"v-for="file in files" :key="file.ds">
+    <v-card style="width: 500px" class="item"v-for="file in files" :key="file.ds">
 
       <v-card-title>
         <span  style="font-size:17px;font-weight:500" class="grey--text text--darken-4">
@@ -26,10 +26,11 @@
 
 
       <v-card-row  v-if="file.type == 'file'" class="title-picture" >
-        <v-card-row><img style="height: 200px" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
+        <v-card-row><img style="height: 300px" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
       </v-card-row>
-
-      <textarea style="width: 100%"> {{`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`}}</textarea>
+      <br>
+      
+      <p> {{`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`}}</p>
       <v-divider></v-divider>
 
       <v-card-row actions>

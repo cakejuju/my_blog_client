@@ -14,6 +14,7 @@ import ANewPost from '../views/admin/posts/New'
 import AEditpost from '../views/admin/posts/Edit'
 import ALayout from '../views/tourists/Layout'
 import ACloudImages from '../views/admin/cloud_images/Index'
+import AGalleryManage from '../views/admin/gallery/Management'
 
 import TLayout from '../views/tourists/Layout'
 import TPosts from '../views/tourists/Posts'
@@ -60,6 +61,7 @@ export default new Router({
                  {path: 'posts/new', component: ANewPost, name: 'AdminNewPost', meta: {title: '新建博客'}},
                  {path: 'posts/edit/:id', component: AEditpost, name: 'AdminEditPost', meta: {title: '编辑博客'}},
                  {path: 'cloud_images', component: ACloudImages, name: 'ACloudImages', meta: {title: '云图片管理'}},
+                 {path: 'gallery/management', component: AGalleryManage, name: 'AGalleryManage', meta: {title: '画廊管理'}},
           
           ]
     },

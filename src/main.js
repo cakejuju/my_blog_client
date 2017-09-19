@@ -24,7 +24,6 @@ import router from './router' // 先找到 router 文件夹, 若其中有index.j
 import Vuetify from 'vuetify' // 组件库
 
 import './assets/vue_strengthen' // 挂载在 vue 的所有方法
-
 // css import 顺序不可变化
 import './assets/stylesheets/icons.css' // vuetify icons
 import './assets/stylesheets/vuetify.min.css' // vuetify css

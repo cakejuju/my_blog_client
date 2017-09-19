@@ -101,7 +101,8 @@ export default {
       items:[], // 在 mounted 函数中加载
       loginCardDisplay: false,
       adminSideBar: [{title: '文章管理', avatar: 'pets', divider: false, href: '/admin/posts'},
-                     {title: '云图片管理', avatar: 'photo_library', divider: false, href: '/admin/cloud_images'}],
+                     {title: '云图片管理', avatar: 'photo_library', divider: false, href: '/admin/cloud_images'},
+                     {title: '画廊管理', avatar: 'color_lens', divider: false, href: '/admin/gallery/management'}],
       query: ''
     }
   },

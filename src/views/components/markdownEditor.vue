@@ -88,8 +88,8 @@
             let res = response.data
             if (res.success === 1) {
               this.$store.commit('setConfig', res.data)
-
               this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
+              
             }
         })
       }
@@ -140,13 +140,16 @@
         this.$http.post(this.imgUploadUrl, fd).then((res) => {
           // console.log(res.data)
           if (res.data.code === 200) {
-            this.pasteImg(res.data.file_path)
+            this.pasteImg(res.data.url)
           }
         })
       },
       pasteImg (src) {
         let start = this.$refs.mainContent.selectionStart
         let end = this.$refs.mainContent.selectionEnd
+        if (this.imgBaseUrl == "" || this.imgBaseUrl == null) {
+          this.imgBaseUrl = this.$store.state.config.UPyun.url_prefix + '/'
+        }
         let insert = `![](${this.imgBaseUrl}${src})`
         let content = this.content.substring(0, start) + insert + this.content.substring(end, this.content.length)
         this.content = content

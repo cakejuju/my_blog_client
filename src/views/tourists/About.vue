@@ -6,9 +6,9 @@
      <v-list-tile avatar style="width:100%" :class="'white'">
 
         <v-list-tile-avatar>
-          <a href="https://github.com/cakejuju"><img v-bind:src="'/static/github.png'"/></a>
+          <a href="https://github.com/joeeeeey"><img v-bind:src="'/static/github.png'"/></a>
         </v-list-tile-avatar>
-        <p><a href="https://github.com/cakejuju">我的github</a></p>
+        <p><a href="https://github.com/joeeeeey">我的github</a></p>
       </v-list-tile>
 
      <v-divider/>
