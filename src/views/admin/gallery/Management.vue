@@ -99,8 +99,6 @@
       toastTimeout: 3000,
       toastDisplay: false,
       toastContent: '',
-      isLogin: true,
-      isRegister: false,
       uploadLoadingDisplay: false,
 
       imageUrl: '',
@@ -148,6 +146,7 @@
     // 上传图片成功 得到后端回传的暂存文件地址
     // 显示图片
     handleAvatarScucess(res, file) {
+      this.uploadLoadingDisplay = false
       console.log(res)
       // res.file_path 是图片在 server 机器的暂存地址
       // 再客户端提交注册并且验证通过后才会上传到云服务
@@ -169,6 +168,7 @@
         this.toastDisplay = true
         this.toastContent = '上传头像图片大小不能超过 10MB!'
       }
+      this.uploadLoadingDisplay = true
       return isJPG||isPNG && isLt2M;
     },
   }

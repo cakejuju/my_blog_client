@@ -42,16 +42,14 @@
         <span style="font-size:25px;font-weight:500;color:#969696" class="item.title_text_color != null ? item.title_text_color : 'grey--text text--darken-4'">{{item.title}}</span>
       </v-card-title>
     </v-card-row>
-    <!-- {{item.height}} -->
     <!-- 文字 -->
     <v-card-text :id="`card_content_${item.id}`" style="height:auto;margin-top:1em; padding-left:2em;">
       <v-card-row >
         <div >
-          <div v-html="toHtml(item.content)" ></div>
+          <div class="full_img" v-html="toHtml(item.content)" ></div>
         </div>
       </v-card-row>
     </v-card-text>
-
 
     <!-- 图片 -->
     <v-card-row v-if="item.img_url != ''&& item.img_url!= null">
@@ -72,13 +70,11 @@
         <v-icon >edit</v-icon>
       </v-btn>
 
-
       <v-spacer></v-spacer>
       <v-btn @click.native="showCommnets()" icon="icon" :class="item.bottom_text_color != null ? item.bottom_text_color : 'grey--text text--darken-4'">
         <v-icon >comment</v-icon>
       </v-btn>
     </v-card-row>
-
 
     <transition name="slide-fade">
       <div v-if="showCommentValue">
@@ -88,7 +84,7 @@
               <v-list-tile avatar style="width:100%;" :class="'white'">
                 <!-- 头像，可不用 -->
                 <v-list-tile-avatar >
-                  <img v-bind:src="comment.head_img_url"/>
+                  <img class="full_img" v-bind:src="comment.head_img_url"/>
                 </v-list-tile-avatar>
 
                 <v-list-tile-content :class="'grey--text text--darken-4'">
@@ -109,7 +105,6 @@
           </template>
         </v-list>
 
-
         <v-card-text>
           <v-list-tile-avatar style="justify-content: flex-start;">
             <img v-bind:src="$store.state.currentMember.head_img_url"/>
@@ -117,7 +112,6 @@
 
           <v-text-field v-model="commentContent" style="padding:0 0" label="说点什么呢.." full-width single-line multi-line  hint="这里是支持markdown的评论区呀" >
           </v-text-field>
-
 
           <v-card-row style="padding:0 0;margin:0 0" actions :class="'white'">
             <!-- <v-icon :class="'grey--text text--darken-2'">photo</v-icon> -->
@@ -130,15 +124,13 @@
       </div>
     </transition>
 
-
     <v-dialog  v-model="loginCardDisplay" > 
       <login-card @loggedIn="LoggedIn"></login-card>
     </v-dialog>
 
-
   </v-card>
 </template>
-<style>
+<style lang='scss'>
 
 /* 评论区的展开动画 */
 /* 可以设置不同的进入和离开动画 */
@@ -154,9 +146,10 @@
   opacity: 0;
 }
 
-img{
-  width: 100%
-}
+.full_img {
+  img{ width: 100%}
+}  
+
 
 </style>
 

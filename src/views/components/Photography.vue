@@ -1,18 +1,73 @@
-<!-- <template>
-  <h2>还没开始搞</h2>
-</template> -->
-
 <template>
   <div id="Photography">
-    <div class="photo-preview" @click="nextPhoto">
+
       <transition name="fade" v-on:after-leave="photoDisplay = true">
-        <img v-if="photoDisplay" :src="photos[photoIndex] ? photos[photoIndex].url : ''">
+        <div class="photo-preview" v-if="photoDisplay">
+
+          <div class="auto_img"  >
+            <img @click="nextPhoto" id="photography" :src="photos[photoIndex] ? photos[photoIndex].img_url : ''"></img>
+
+            <div class="afuckclass" >
+              <v-card-row style="height:100%; background-color: rgba(220,220,220, 0);" >
+                <v-list-tile-action style="margin-left:0.5rem;">
+                  <font style="margin-left:0.5rem;font-weight: 500; font-size:15px">
+                    {{photos[photoIndex] ? photos[photoIndex].description : '暂无描述'}}
+                  </font>
+                </v-list-tile-action>
+
+                <v-spacer></v-spacer>
+
+                <el-tooltip placement="top" effect="light">
+                  <!-- 悬浮显示照片详情 -->
+                  <div slot="content" >
+                    <v-card-text  style="height:auto;margin-top:1em;">
+                      <div style="text-align: center;">
+                        <h5 >{{photos[photoIndex] ? photos[photoIndex].description : '暂无描述'}}</h5>
+                        <v-divider/>
+                        <br>
+                       <div class="row" style="width:100%;" >
+
+                         <div style="width:50%;height:100%; float:left">
+                            {{photos[photoIndex] ? (photos[photoIndex].exif_v ? photos[photoIndex].exif_v.DateTime : '暂无描述') : '暂无描述'}}
+                         </div>
+                         <div style="width:50%;height:100%; float:left">
+                            <!-- {{photos[photoIndex] ? photos[photoIndex].exif.DateTime : '暂无描述'}} -->
+                         </div>
+                       </div>
+
+                        
+                 
+                      </div>
+
+                    </v-card-text>
+   
+                   <!-- <br/>第二行信息 -->
+                  </div>
+
+                  <button  type="button" class="el-tooltip">
+                    <span>
+                      <button type="button" class="btn btn--icon btn--raised grey--text text--darken-4">
+                        <span class="btn__content">
+                          <i class="material-icons icon">info</i>
+                        </span>
+                      </button>
+                    </span>
+                  </button>
+
+                </el-tooltip>
+
+              </v-card-row>
+            </div>
+
+          </div>
+        </div>
       </transition>
-    </div>
+
+
     <div class="photo-list">
       <div class="photo-thumbnails" v-for="(photo, index) in photos" @click="photoChoose(index)">
         <div class="photo-mask" v-if="photoIndex !== index"></div>
-        <img :src="``">
+        <img :src="photo ? (photo.img_url + '!thumbnails') : ''">
       </div>
     </div>
   </div>
@@ -24,7 +79,8 @@
     name: 'Photography',
     data: () => ({
       photoIndex: 0,
-      photoDisplay: true
+      photoDisplay: true,
+      current_photo: {}
     }),
     head: () => ({
       title: ''
@@ -42,33 +98,70 @@
         } else {
           this.photoIndex = 0
         }
+        this.current_photo = this.photos[this.photoIndex]
       },
       photoChoose (index) {
         this.photoDisplay = false
         this.photoIndex = index
       }
+    },
+    mounted: function () {
+      this.current_photo = this.photos[0]
+      console.log(this.current_photo)
+      // document.addEventListener('click', (e) => {console.log(e.target)})
     }
   }
 </script>
 
 <style lang='scss' scoped>
+
   @media (max-width: 450px) {
-  #Photography .photo-preview {
-    height: 300px !important;
+    #Photography .photo-preview {
+      height: 300px !important;
+    }
   }
-}
+  
+  #Photography .photo-preview .auto_img:hover .afuckclass  {
+    height: 7%;
+  }
+
   #Photography {
+    margin-top:20px;
     width: 100%;
-    .photo-preview {
+    .photo-preview { 
       width: 100%;
-      height: 500px;
+      height: 550px;
       text-align: center;
       margin-bottom: 1rem;
+      
       img {
+        margin-bottom: -0.4rem;
         max-width: 100%;
         max-height: 100%;
         vertical-align: center;
       }
+      .auto_img {
+        height: 550px;
+        display: inline-block;
+        // margin: auto;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          vertical-align: center;
+        }
+      }
+      .afuckclass {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        overflow: hidden;
+        transition: 0.3s ease;
+        transform: translate(0, -100%);
+      }
+
     }
     .photo-list {
       width: 100%;
@@ -95,4 +188,3 @@
     }
   }
 </style>
-

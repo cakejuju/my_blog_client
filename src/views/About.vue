@@ -89,7 +89,6 @@
   </div>
 </template>
 
-<script>
   
 
 

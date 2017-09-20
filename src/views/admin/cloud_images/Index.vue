@@ -21,9 +21,7 @@
         <v-btn @click.native="goIntoFolder(file.name)" v-if="file.type == 'folder'" class="grey--text text--darken-4">{{file.name}}</v-btn>
       </v-card-title>
 
-
        <v-divider></v-divider>
-
 
       <v-card-row  v-if="file.type == 'file'" class="title-picture" >
         <v-card-row><img style="height: 300px" :src="`${$store.state.config.UPyun.url_prefix}${img_url}/${file.name}`" alt=""></v-card-row> 
