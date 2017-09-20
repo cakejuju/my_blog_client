@@ -44,7 +44,7 @@
                           
                          <div style="width:25%;height:100%; float:left">
                             <!-- 曝光时间 -->
-                            1/{{photoExif(photos[photoIndex], 'ExposureTime')}}s
+                            {{photoExif(photos[photoIndex], 'ExposureTime')}}s
                           </div>
 
                           <div style="width:25%;height:100%; float:left">
