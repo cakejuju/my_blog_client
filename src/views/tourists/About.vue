@@ -4,16 +4,23 @@
       <div style="text-align: center;">
         <h5 >关于我</h5>
         
-        <v-list-tile avatar style="width:100%;" :class="'white'">
-          <li><a href="https://github.com/joeeeeey">GitHub</a></li>
-        </v-list-tile>
 
-        <v-list-tile avatar style="width:100%" :class="'white'">
-          <li><a href="https://joeeeeey.github.io/cn_resume/">Resume</a></li>
-        </v-list-tile> 
+        <div class="row" style="width:100%;margin-top:3rem" >
+          <div style="width:50%;height:100%; float:left">
+            <li><a href="https://github.com/joeeeeey">GitHub</a></li>
+
+          </div>
+          <div style="width:50%;height:100%; float:left">
+
+            <li><a href="https://joeeeeey.github.io/cn_resume/">Resume</a></li>
+          </div>
+        </div>
+
       </div>
-
-     <v-divider/>
+      <br>
+      <v-divider/><v-divider/>
+      
+     
 
      <!-- <v-card-row > -->
        <div style="text-align: center;">
@@ -22,7 +29,7 @@
        </div>
      <!-- </v-card-row> -->
 
-     <v-divider/>
+     <v-divider/><v-divider/>
      <br>
       <!-- <v-card-row > -->
         <div style="text-align: center;">

@@ -22,7 +22,7 @@ import TAbout from '../views/tourists/About'
 import TGallery from '../views/tourists/Gallery'
 import TPost from '../views/tourists/Post' // 单个post
 import PostsTwoColumns from '../views/tourists/PostsThreeColumns' // 每行三列的post
-
+import TMusicVedio from '../views/tourists/MusicVedio'
 
 Router.prototype.readCookie = function(name) {
     var nameEQ = name + "=";
@@ -90,6 +90,7 @@ export default new Router({
                   {path: 'about', component: TAbout, name: 'tabout', meta: {title: '关于本站'}},
                   {path: 'posts/:id', component: TPost, name: 'postDetail', meta: {title: '单个展示'}},
                   {path: 'gallery', component: TGallery, name: 'gallery', meta: {title: '画廊'}},
+                  {path: 'music_vedios', component: TMusicVedio, name: 'musicVedio', meta: {title: '专辑'}},
           
           ]
     }

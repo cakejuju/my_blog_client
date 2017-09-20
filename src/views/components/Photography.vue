@@ -4,7 +4,7 @@
       <transition name="fade" v-on:after-leave="photoDisplay = true">
         <div class="photo-preview" v-if="photoDisplay">
 
-          <div class="auto_img"  >
+          <div class="auto_img">
             <img @click="nextPhoto" id="photography" :src="photos[photoIndex] ? photos[photoIndex].img_url : ''"></img>
 
             <div class="afuckclass" >
@@ -19,24 +19,56 @@
 
                 <el-tooltip placement="top" effect="light">
                   <!-- 悬浮显示照片详情 -->
-                  <div slot="content" >
+                  <div slot="content" style="width:300px">
                     <v-card-text  style="height:auto;margin-top:1em;">
                       <div style="text-align: center;">
-                        <h5 >{{photos[photoIndex] ? photos[photoIndex].description : '暂无描述'}}</h5>
+                        <h5 > {{photoAtr(photos[photoIndex], 'description')}}</h5>
+   
                         <v-divider/>
-                        <br>
-                       <div class="row" style="width:100%;" >
-
-                         <div style="width:50%;height:100%; float:left">
-                            {{photos[photoIndex] ? (photos[photoIndex].exif_v ? photos[photoIndex].exif_v.DateTime : '暂无描述') : '暂无描述'}}
-                         </div>
-                         <div style="width:50%;height:100%; float:left">
-                            <!-- {{photos[photoIndex] ? photos[photoIndex].exif.DateTime : '暂无描述'}} -->
-                         </div>
-                       </div>
-
+                        <!-- <v-divider/> -->
                         
-                 
+                        <div>
+                          <v-icon medium>linked_camera</v-icon>
+                          <p>{{photoExif(photos[photoIndex], 'Model')}}</p>
+                        </div>
+
+                        <div class="row" style="width:100%;" >
+                          <div style="width:25%;height:100%; float:left">
+                            <!-- 焦距 -->
+                            {{photoExif(photos[photoIndex], 'FocalLengthIn35mmFilm')}}mm
+                          </div>
+                          <div style="width:25%;height:100%; float:left">
+                            <!-- f 值 -->
+                            f/{{photoExif(photos[photoIndex], 'FNumber')}}
+                          </div>
+                          
+                         <div style="width:25%;height:100%; float:left">
+                            <!-- 曝光时间 -->
+                            1/{{photoExif(photos[photoIndex], 'ExposureTime')}}s
+                          </div>
+
+                          <div style="width:25%;height:100%; float:left">
+                            <!-- ISO 值 -->
+                            ISO{{photoExif(photos[photoIndex], 'ISOSpeedRatings')}}
+                          </div>
+                        </div>
+
+                        <br>
+                        <v-divider/>
+
+
+                        <div class="row" style="width:100%;margin-top:1rem" >
+                          <div style="width:50%;height:100%; float:left">
+                            <h6>拍摄于</h6>
+                            {{photoExif(photos[photoIndex], 'DateTime')}}
+                          </div>
+                          <div style="width:50%;height:100%; float:left">
+                            <h6>上传于</h6>
+                            {{photoAtr(photos[photoIndex], 'shot_at')}}
+                          </div>
+                        </div>
+                       
+
                       </div>
 
                     </v-card-text>
@@ -79,8 +111,7 @@
     name: 'Photography',
     data: () => ({
       photoIndex: 0,
-      photoDisplay: true,
-      current_photo: {}
+      photoDisplay: true
     }),
     head: () => ({
       title: ''
@@ -91,6 +122,36 @@
       }
     },
     methods: {
+      photoAtr(photo, atr){
+        if (photo) {
+          if (photo[atr]) {
+            return photo[atr]
+          }else{
+            return ''
+          }
+        }else{
+          return '暂无描述'
+        }
+      },
+      photoExif(photo, atr){
+        if (photo) {
+          if (photo.exif_v) {
+            if (photo.exif_v[atr]) {
+              if (atr == 'FNumber') {
+                return eval(photo.exif_v[atr])
+              }
+              return photo.exif_v[atr]
+            }else{
+              return '暂无'
+            }
+          }else{
+            return '暂无'
+          }
+        }else{
+          return '暂无'
+        }
+
+      },
       nextPhoto () {
         this.photoDisplay = false
         if (this.photoIndex < this.photos.length - 1) {
@@ -98,7 +159,6 @@
         } else {
           this.photoIndex = 0
         }
-        this.current_photo = this.photos[this.photoIndex]
       },
       photoChoose (index) {
         this.photoDisplay = false
@@ -106,8 +166,6 @@
       }
     },
     mounted: function () {
-      this.current_photo = this.photos[0]
-      console.log(this.current_photo)
       // document.addEventListener('click', (e) => {console.log(e.target)})
     }
   }

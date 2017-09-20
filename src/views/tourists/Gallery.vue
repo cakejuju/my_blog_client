@@ -24,7 +24,7 @@
         let query_params = {limit:          this.limit, 
                             current_page:   this.current_page,
                             order_params:   order_params,
-                            json_methods:   ['exif_v', 'shot_time'],
+                            json_methods:   ['exif_v', 'shot_at'],
                             json_only: ['description', 'created_at', 'img_url']}
 
         return query_params;
