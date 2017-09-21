@@ -139,8 +139,8 @@ export default {
     // 根据是否为管理者加载侧边栏
     let items = [
                  {title: '博文', avatar: 'import_contacts', divider: false, href: '/tou/posts'},
-                 {title: '关于', avatar: 'face', divider: false, href: '/tou/about'},
                  {title: '画廊', avatar: 'color_lens', divider: false, href: '/tou/gallery'},
+                 {title: '关于', avatar: 'face', divider: false, href: '/tou/about'},
                  {title: '专辑（建设中...）', avatar: 'music_video', divider: true, href: '/tou/music_vedios'}]
 
     // the store of vuex will be empty after page refresh 

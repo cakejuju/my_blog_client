@@ -188,7 +188,7 @@
     width: 100%;
     .photo-preview { 
       width: 100%;
-      height: 550px;
+      height: 600px;
       text-align: center;
       margin-bottom: 1rem;
       
