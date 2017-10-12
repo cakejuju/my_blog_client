@@ -146,8 +146,9 @@
   opacity: 0;
 }
 
+
 .full_img {
-  img{ width: 100%}
+  img{ width: 75%; }
 }  
 
 
