@@ -111,11 +111,20 @@ body {
 }
 
 
-code, kbd, pre, samp {
+kbd, pre, samp {
  width: 100%;
   /*background: #282c34;*/
 }
 
+code{
+  margin-left:0.6px;
+  padding: 2px 4px;
+  background-color: #f6f6f6;
+  border: none;
+  color: #657b83;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
 /*代码高亮*/
 
 code:after, code:before, kbd:after, kbd:before {
