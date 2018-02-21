@@ -6,14 +6,14 @@
         
 
         <div class="row" style="width:100%;margin-top:3rem" >
-          <div style="width:50%;height:100%; float:left">
+          <div style="width:100%;height:100%; float:left">
             <li><a href="https://github.com/joeeeeey">GitHub</a></li>
 
           </div>
-          <div style="width:50%;height:100%; float:left">
+          <!-- <div style="width:50%;height:100%; float:left">
 
             <li><a href="https://joeeeeey.github.io/cn_resume/">Resume</a></li>
-          </div>
+          </div> -->
         </div>
 
       </div>
